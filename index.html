@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Journey to Malaysia</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="batik-dots" id="batikDots"></div>
+
+    <div class="container">
+      <div class="logo-section">
+        <div class="logo">MYS ✈ AUS</div>
+        <div class="logo-subtitle">Journey to Malaysia</div>
+      </div>
+
+      <div class="event-title">A Vibrant Celebration of</div>
+      <div class="event-subtitle">Malaysian Culture and Tourism</div>
+
+      <div class="countdown">
+        <div class="time-unit">
+          <span class="time-value" id="days">00</span>
+          <span class="time-label">Days</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="hours">00</span>
+          <span class="time-label">Hours</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="minutes">00</span>
+          <span class="time-label">Minutes</span>
+        </div>
+        <div class="time-unit">
+          <span class="time-value" id="seconds">00</span>
+          <span class="time-label">Seconds</span>
+        </div>
+      </div>
+
+      <div class="event-details">
+        <strong>15 November 2025</strong><br />
+        Forrest Place, Perth CBD<br />
+        9:00am - 6:00pm
+      </div>
+    </div>
+
+    <script>
+      // Create decorative batik dots
+      const batikContainer = document.getElementById("batikDots");
+      for (let i = 0; i < 60; i++) {
+        const dot = document.createElement("div");
+        dot.className = "dot";
+        dot.style.left = Math.random() * 100 + "%";
+        dot.style.top = Math.random() * 100 + "%";
+        batikContainer.appendChild(dot);
+      }
+
+      // Countdown timer
+      const eventDate = new Date("November 15, 2025 09:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("hours").textContent = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").textContent = String(
+          minutes
+        ).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(
+          seconds
+        ).padStart(2, "0");
+
+        if (distance < 0) {
+          document.querySelector(".countdown").innerHTML =
+            '<h1 style="color: #FFD700; font-size: 48px;">The Event Has Started!</h1>';
+        }
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
