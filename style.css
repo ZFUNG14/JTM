@@ -15,34 +15,35 @@
   --logo: clamp(32px, 6vw, 72px);
   --logo-spacing: clamp(2px, 0.8vw, 10px);
   --subtitle: clamp(14px, 2vw, 24px);
-
   --title: clamp(20px, 3vw, 36px);
   --subtitle2: clamp(12px, 1.6vw, 18px);
-
   --time-value: clamp(34px, 6vw, 72px);
   --time-label: clamp(12px, 1.6vw, 18px);
-
   --details: clamp(14px, 1.8vw, 18px);
   --details-strong: clamp(16px, 2vw, 22px);
+
+  /* Hero image sizes */
+  --jtm-logo-h: clamp(350px, 8vw, 800px);
+  --org-logo-h: clamp(160px, 4.5vw, 800px);
+
+  /* Supporters tile sizing */
+  --supp-wide:   clamp(180px, 18vw, 240px);  /* first two columns (row 1) */
+  --supp-square: clamp(60px, 12vw, 80px);  /* last two columns (row 1) */
+  --supp-cell-h: clamp(60px, 5.5vw, 90px);   /* plate height for non-square tiles */
 }
 
 /* ========= Page ========= */
 body {
   font-family: "Georgia", serif;
   background: #7b2f21 url("media/background.png") center/cover no-repeat fixed;
-  min-height: 100dvh; /* better than 100vh on mobile */
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto;     /* allow scroll on short screens */
+  overflow: auto;
   position: relative;
-
-  /* Keep content away from device notches/safe areas */
-  padding:
-    env(safe-area-inset-top)
-    env(safe-area-inset-right)
-    env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Textured background overlay */
@@ -52,35 +53,12 @@ body::before {
   inset: 0;
   background-image:
     repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 2px,
-      rgba(139, 58, 58, 0.3) 2px,
-      rgba(139, 58, 58, 0.3) 4px
+      45deg, transparent, transparent 2px, rgba(139,58,58,.3) 2px, rgba(139,58,58,.3) 4px
     ),
     repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 2px,
-      rgba(139, 58, 58, 0.3) 2px,
-      rgba(139, 58, 58, 0.3) 4px
+      -45deg, transparent, transparent 2px, rgba(139,58,58,.3) 2px, rgba(139,58,58,.3) 4px
     );
   opacity: 0.3;
-}
-
-/* Decorative batik dots (JS adds .dot children) */
-.batik-dots {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1; /* above overlay, below content */
-}
-.dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(212, 175, 55, 0.3);
-  border-radius: 50%;
 }
 
 /* ========= Card/Container ========= */
@@ -135,14 +113,14 @@ body::before {
 /* ========= Countdown ========= */
 .countdown {
   display: flex;
-  flex-wrap: wrap; /* wrap on narrow widths */
+  flex-wrap: wrap;
   justify-content: center;
   gap: clamp(12px, 3vw, 30px);
   margin-bottom: var(--space);
 }
 
 .time-unit {
-  flex: 1 1 clamp(130px, 22%, 220px); /* 4 per row on wide, 2x2 on phones */
+  flex: 1 1 clamp(130px, 22%, 220px);
   min-width: 0;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(5px);
@@ -184,35 +162,133 @@ body::before {
 
 /* ========= Motion Pref (accessibility) ========= */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
 /* ========= Responsive Edges ========= */
-
-/* Avoid scroll jank from fixed backgrounds on many mobile browsers */
-@media (max-width: 1024px) {
-  body { background-attachment: scroll; }
-}
-
-/* Very small phones: tidy 2x2 countdown grid and tighter letter-spacing */
-@media (max-width: 480px) {
-  .time-unit { flex-basis: 48%; }
-  .logo { letter-spacing: 2px; }
-}
-
-/* Short landscape screens (phones, mini laptops) */
+@media (max-width: 1024px) { body { background-attachment: scroll; } }
+@media (max-width: 480px)  { .time-unit { flex-basis: 48%; } .logo { letter-spacing: 2px; } }
 @media (max-height: 500px) and (orientation: landscape) {
   .container { padding: 16px; }
   .countdown { gap: 10px; }
   .time-unit { padding: 12px 10px; }
 }
+@media (min-width: 1600px) { .container { width: min(85vw, 1200px); } }
 
-/* Big screens / TVs */
-@media (min-width: 1600px) {
-  .container { width: min(85vw, 1200px); }
+/* --- subtitle becomes a logo image --- */
+.jtm-logo{
+  height: var(--jtm-logo-h);
+  width: auto;
+  display: block;
+  margin-inline: auto;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,.35));
+}
+
+/* --- divider --- */
+.divider{
+  border: 0;
+  height: 1px;
+  margin: clamp(16px, 3vw, 28px) 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212,175,55,.25) 15%,
+    rgba(212,175,55,.7) 50%,
+    rgba(212,175,55,.25) 85%,
+    transparent 100%
+  );
+}
+
+/* --- partners / logos strip --- */
+.partners{
+  display: grid;
+  gap: clamp(14px, 2.4vw, 22px);
+  margin-top: clamp(12px, 2vw, 20px);
+}
+
+/* Each block (Organised by / Supported by) — caption above, logos below */
+.partners-group{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "label"
+    "logos";
+  row-gap: clamp(8px, 1vw, 12px);
+  align-items: start;
+}
+
+/* Label */
+.partners-label{
+  grid-area: label;
+  color: #fff;
+  opacity: .95;
+  font-size: clamp(12px, 1.6vw, 14px);
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Generic logos container (flex; overridden for supporters) */
+.logos-list{
+  grid-area: logos;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.4vw, 16px);
+  align-items: center;
+  overflow: visible;
+}
+
+/* Generic logo plate look (no fixed height here) */
+.logos-list img{
+  display: block;
+  width: auto;
+  object-fit: contain;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 8px;
+  padding: clamp(4px, 0.8vw, 8px);
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
+/* Organisers: larger single plate */
+.partners-group.organisers .logos-list img{
+  height: var(--org-logo-h);
+}
+
+/* === Supporters: 2-line, tight grid; last two items on row 1 are square === */
+.supporters .logos-list{
+  display: grid;
+  grid-template-columns: var(--supp-wide) var(--supp-wide) var(--supp-square) var(--supp-square);
+  gap: clamp(10px, 1vw, 14px);
+  justify-content: start;     /* no extra spacing on the right */
+  align-items: center;
+  width: max-content;         /* shrink-wrap to tiles */
+}
+
+/* Place items so row 2 starts from the left */
+.supporters .logos-list img:nth-child(1){ grid-row:1; grid-column:1; } /* EMA  */
+.supporters .logos-list img:nth-child(2){ grid-row:1; grid-column:2; } /* TM   */
+.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:3; } /* MASCA (square) */
+.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:4; } /* AMBC  (square) */
+.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:1; } /* MH   */
+.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* UEM  */
+.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:2; } /* MARA */
+
+/* Default supporters plate sizing (non-square tiles) */
+.supporters .logos-list img{
+  inline-size: 100%;
+  block-size: var(--supp-cell-h);
+  padding: clamp(6px, 0.8vw, 10px);
+}
+
+/* Make the 3rd & 4th supporters logos perfect squares */
+.supporters .logos-list img:nth-child(3),
+.supporters .logos-list img:nth-child(4){
+  aspect-ratio: 1 / 1;
+  block-size: auto;
+}
+
+/* Two groups side-by-side on wider screens */
+@media (min-width: 900px){
+  .partners{ grid-template-columns: 1fr 2fr; align-items: start; }
 }

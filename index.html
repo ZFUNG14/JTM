@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Journey to Malaysia</title>
+    <link rel="icon" type="image/png" href="media/logo/JTMLogo.png" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -11,8 +12,13 @@
 
     <div class="container">
       <div class="logo-section">
-        <div class="logo">MYS ✈ AUS</div>
-        <div class="logo-subtitle">Journey to Malaysia</div>
+        <div class="logo-subtitle">
+          <img
+            class="jtm-logo"
+            src="media/logos/JTMLogo.png"
+            alt="Journey to Malaysia"
+          />
+        </div>
       </div>
 
       <div class="event-title">A Vibrant Celebration of</div>
@@ -42,19 +48,38 @@
         Forrest Place, Perth CBD<br />
         9:00am - 6:00pm
       </div>
+
+      <!-- 2) Divider line -->
+      <hr class="divider" />
+
+      <!-- 3) logoss strip -->
+      <section class="partners">
+        <div class="partners-group organisers">
+          <span class="partners-label">Organised by:</span>
+          <div class="logos-list">
+            <img src="media/logos/CG.png" alt="Consulate General of Malaysia" />
+          </div>
+        </div>
+
+        <div class="partners-group supporters">
+          <span class="partners-label">Supported by:</span>
+          <div class="logos-list">
+            <img src="media/logos/EMA.png" alt="Education Malaysia Australia" />
+            <img src="media/logos/TM.png" alt="Tourism Malaysia" />
+            <img src="media/logos/MASCA.png" alt="MASCA" />
+            <img
+              src="media/logos/AMBC.png"
+              alt="Australian Malaysian Business Council"
+            />
+            <img src="media/logos/MH.png" alt="Malaysia Airlines" />
+            <img src="media/logos/UEM.png" alt="UEM" />
+            <img src="media/logos/MARA.png" alt="Universiti Teknologi MARA" />
+          </div>
+        </div>
+      </section>
     </div>
 
     <script>
-      // Create decorative batik dots
-      const batikContainer = document.getElementById("batikDots");
-      for (let i = 0; i < 60; i++) {
-        const dot = document.createElement("div");
-        dot.className = "dot";
-        dot.style.left = Math.random() * 100 + "%";
-        dot.style.top = Math.random() * 100 + "%";
-        batikContainer.appendChild(dot);
-      }
-
       // Countdown timer
       const eventDate = new Date("November 15, 2025 09:00:00").getTime();
 
@@ -86,10 +111,9 @@
 
         if (distance < 0) {
           document.querySelector(".countdown").innerHTML =
-            '<h1 style="color: #FFD700; font-size: 48px;">The Event Has Started!</h1>';
+            '<h1 style="color:#FFD700;font-size:48px;">The Event Has Started!</h1>';
         }
       }
-
       updateCountdown();
       setInterval(updateCountdown, 1000);
     </script>
