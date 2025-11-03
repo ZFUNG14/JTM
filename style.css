@@ -26,10 +26,10 @@
   --jtm-logo-h: clamp(350px, 8vw, 800px);
   --org-logo-h: clamp(160px, 4.5vw, 800px);
 
-  /* Supporters tile sizing */
-  --supp-wide:   clamp(180px, 18vw, 240px);  /* first two columns (row 1) */
-  --supp-square: clamp(60px, 12vw, 80px);  /* last two columns (row 1) */
-  --supp-cell-h: clamp(60px, 5.5vw, 90px);   /* plate height for non-square tiles */
+/* Supporters tile sizing (desktop defaults) */
+--supp-cell-h: clamp(56px, 5.2vw, 90px);   /* uniform “plate” height */
+--supp-wide:   clamp(200px, 22vw, 320px);  /* typical rectangle width */
+--supp-square: var(--supp-cell-h);         /* square = same as height */
 }
 
 /* ========= Page ========= */
@@ -257,38 +257,110 @@ body::before {
 
 /* === Supporters: 2-line, tight grid; last two items on row 1 are square === */
 .supporters .logos-list{
-  display: grid;
-  grid-template-columns: var(--supp-wide) var(--supp-wide) var(--supp-square) var(--supp-square);
-  gap: clamp(10px, 1vw, 14px);
-  justify-content: start;     /* no extra spacing on the right */
-  align-items: center;
-  width: max-content;         /* shrink-wrap to tiles */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;                          /* centered on wide & narrow */
+  gap: clamp(10px, 1.2vw, 16px);
+  width: 100%;                                      /* stay inside container */
 }
 
 /* Place items so row 2 starts from the left */
 .supporters .logos-list img:nth-child(1){ grid-row:1; grid-column:1; } /* EMA  */
 .supporters .logos-list img:nth-child(2){ grid-row:1; grid-column:2; } /* TM   */
-.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:3; } /* MASCA (square) */
-.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:4; } /* AMBC  (square) */
-.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:1; } /* MH   */
-.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* UEM  */
-.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:2; } /* MARA */
+.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:1; } /* MH   */
+.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:3; } /* UEM  */
+.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:2; } /* MARA */
+.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* MASCA (square) */
+.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:4; } /* AMBC  (square) */
 
 /* Default supporters plate sizing (non-square tiles) */
 .supporters .logos-list img{
-  inline-size: 100%;
-  block-size: var(--supp-cell-h);
+  height: var(--supp-cell-h);
+  width: auto;
+  max-width: var(--supp-wide);
   padding: clamp(6px, 0.8vw, 10px);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 
 /* Make the 3rd & 4th supporters logos perfect squares */
-.supporters .logos-list img:nth-child(3),
-.supporters .logos-list img:nth-child(4){
-  aspect-ratio: 1 / 1;
-  block-size: auto;
+.supporters .logos-list img:nth-child(6),
+.supporters .logos-list img:nth-child(7){
+  width: var(--supp-square);
+  flex: 0 0 var(--supp-square);
 }
 
 /* Two groups side-by-side on wider screens */
 @media (min-width: 900px){
   .partners{ grid-template-columns: 1fr 2fr; align-items: start; }
 }
+
+
+@media (max-width: 700px){
+  .supporters .logos-list{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 2 per row */
+    grid-auto-flow: row dense;                            /* no holes */
+    gap: 12px;
+    justify-items: center;
+    width: 100%;
+  }
+
+  /* Reset everything that could hide/squeeze images */
+  .supporters .logos-list img{
+    width: 100% !important;
+    max-width: 100%;
+    height: clamp(52px, 15vw, 70px);
+    object-fit: contain;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    aspect-ratio: auto !important;
+    flex: initial !important;
+  }
+
+    /* center captions and organiser area */
+  .partners-group { justify-items: center; }
+  .partners-label { text-align: center; }
+
+  .partners-group.organisers .logos-list{
+    justify-content: center;   /* flex container centering */
+    width: 100%;
+  }
+  .partners-group.organisers .logos-list img{
+    margin-inline: auto;       /* center the image inside the flex line */
+    height: clamp(90px, 28vw, 140px); /* smaller crest on phones */
+  }
+
+    :root{
+    --logo:       clamp(24px, 8vw, 48px);
+    --title:      clamp(20px, 6.2vw, 28px);
+    --subtitle:   clamp(12px, 4vw, 18px);
+    --subtitle2:  clamp(12px, 3.6vw, 18px);
+    --time-value: clamp(28px, 10vw, 44px);
+    --time-label: clamp(10px, 3.2vw, 14px);
+    --details:    clamp(13px, 3.5vw, 16px);
+    --details-strong: clamp(14px, 3.8vw, 18px);
+  }
+}
+
+@media (min-width: 1200px){
+  :root{
+    --logo:       clamp(48px, 5vw, 90px);
+    --title:      clamp(32px, 2.4vw, 48px);
+    --subtitle:   clamp(16px, 1.4vw, 24px);
+    --subtitle2:  clamp(32px, 1.2vw, 32px);
+    --time-value: clamp(50px, 4.6vw, 80px);
+    --time-label: clamp(12px, 1.1vw, 18px);
+  }
+}
+
+
+/* Super-small phones: stack one per row */
+@media (max-width: 380px){
+  .supporters .logos-list{
+    grid-template-columns: 1fr;
+  }
+}
+
