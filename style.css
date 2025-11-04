@@ -1,4 +1,5 @@
 /* ========= Reset ========= */
+/* Remove default browser margins, padding, and set consistent box-sizing for all elements */
 * {
   margin: 0;
   padding: 0;
@@ -6,361 +7,412 @@
 }
 
 /* ========= Fluid Scales & Tokens ========= */
+/* CSS custom properties (variables) that scale responsively using clamp() */
 :root {
-  /* Spacing & radii */
-  --space: clamp(12px, 2.2vw, 32px);
-  --radius: clamp(14px, 2vw, 30px);
+  /* Spacing & radii - scales between min and max values based on viewport width */
+  --space: clamp(12px, 2.2vw, 32px);      /* General spacing unit */
+  --radius: clamp(14px, 2vw, 30px);       /* Border radius for rounded corners */
 
-  /* Type scales */
-  --logo: clamp(32px, 6vw, 72px);
-  --logo-spacing: clamp(2px, 0.8vw, 10px);
-  --subtitle: clamp(14px, 2vw, 24px);
-  --title: clamp(20px, 3vw, 36px);
-  --subtitle2: clamp(12px, 1.6vw, 18px);
-  --time-value: clamp(34px, 6vw, 72px);
-  --time-label: clamp(12px, 1.6vw, 18px);
-  --details: clamp(14px, 1.8vw, 18px);
-  --details-strong: clamp(16px, 2vw, 22px);
+  /* Type scales - responsive font sizes */
+  --logo: clamp(32px, 6vw, 72px);                    /* Main logo text size */
+  --logo-spacing: clamp(2px, 0.8vw, 10px);          /* Letter spacing for logo */
+  --subtitle: clamp(14px, 2vw, 24px);               /* Subtitle text size */
+  --title: clamp(20px, 3vw, 36px);                 /* Event title size */
+  --subtitle2: clamp(12px, 1.6vw, 18px);            /* Secondary subtitle */
+  --time-value: clamp(34px, 6vw, 72px);             /* Countdown numbers */
+  --time-label: clamp(12px, 1.6vw, 18px);           /* Countdown labels (Days, Hours, etc) */
+  --details: clamp(14px, 1.8vw, 18px);              /* Event details text */
+  --details-strong: clamp(16px, 2vw, 22px);         /* Bold event details */
 
   /* Hero image sizes */
-  --jtm-logo-h: clamp(350px, 8vw, 800px);
-  --org-logo-h: clamp(160px, 4.5vw, 800px);
+  --jtm-logo-h: clamp(350px, 8vw, 800px);           /* Journey to Malaysia logo height */
+  --org-logo-h: clamp(160px, 4.5vw, 800px);         /* Organiser logo height */
 
-/* Supporters tile sizing (desktop defaults) */
---supp-cell-h: clamp(56px, 5.2vw, 90px);   /* uniform “plate” height */
---supp-wide:   clamp(200px, 22vw, 320px);  /* typical rectangle width */
---supp-square: var(--supp-cell-h);         /* square = same as height */
+  /* Supporters tile sizing (desktop defaults) */
+  --supp-cell-h: clamp(56px, 5.2vw, 90px);          /* Uniform height for supporter logos */
+  --supp-wide: clamp(200px, 22vw, 320px);           /* Width for rectangular logos */
+  --supp-square: var(--supp-cell-h);                /* Square logos use same as height */
 }
 
 /* ========= Page ========= */
+/* Body styling - creates the main background and centers content */
 body {
-  font-family: "Georgia", serif;
-  background: #7b2f21 url("media/background.png") center/cover no-repeat fixed;
-  min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
-  position: relative;
+  font-family: "Georgia", serif;                     /* Elegant serif font */
+  background: #7b2f21 url("media/background.png") center/cover no-repeat fixed;  /* Red-brown bg with texture */
+  min-height: 100dvh;                                /* Full viewport height (dynamic for mobile) */
+  display: flex;                                     /* Flexbox for centering */
+  justify-content: center;                           /* Center horizontally */
+  align-items: center;                               /* Center vertically */
+  overflow: auto;                                    /* Allow scrolling if needed */
+  position: relative;                                /* For absolute positioning of overlay */
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
-           env(safe-area-inset-bottom) env(safe-area-inset-left);
+           env(safe-area-inset-bottom) env(safe-area-inset-left);  /* Safe area padding for notched devices */
 }
 
-/* Textured background overlay */
+/* Textured background overlay - creates a crosshatch pattern */
 body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  content: "";                                       /* Empty content required for pseudo-element */
+  position: absolute;                                /* Positioned over entire body */
+  inset: 0;                                         /* Shorthand for top:0, right:0, bottom:0, left:0 */
   background-image:
+    /* 45-degree diagonal lines */
     repeating-linear-gradient(
       45deg, transparent, transparent 2px, rgba(139,58,58,.3) 2px, rgba(139,58,58,.3) 4px
     ),
+    /* -45-degree diagonal lines (creates crosshatch) */
     repeating-linear-gradient(
       -45deg, transparent, transparent 2px, rgba(139,58,58,.3) 2px, rgba(139,58,58,.3) 4px
     );
-  opacity: 0.3;
+  opacity: 0.3;                                      /* Semi-transparent overlay */
 }
 
 /* ========= Card/Container ========= */
+/* Main content card with glassmorphism effect */
 .container {
-  text-align: center;
-  z-index: 10;
-  width: min(92vw, 980px);
-  padding: clamp(20px, 4vw, 48px);
-  margin: var(--space) auto;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius);
-  border: 2px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  text-align: center;                                /* Center all text inside */
+  z-index: 10;                                       /* Place above background overlay */
+  width: min(92vw, 980px);                          /* Responsive width: 92% of viewport or max 980px */
+  padding: clamp(20px, 4vw, 48px);                  /* Responsive padding */
+  margin: var(--space) auto;                        /* Vertical spacing, horizontally centered */
+  background: rgba(255, 255, 255, 0.08);            /* Semi-transparent white background */
+  backdrop-filter: blur(10px);                      /* Blur effect for glassmorphism */
+  border-radius: var(--radius);                     /* Rounded corners */
+  border: 2px solid rgba(212, 175, 55, 0.3);       /* Semi-transparent gold border */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);      /* Drop shadow for depth */
 }
 
+/* Logo section spacing */
 .logo-section { margin-bottom: var(--space); }
 
 /* ========= Typography ========= */
+/* Main logo text styling (if text is used instead of image) */
 .logo {
-  font-size: var(--logo);
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-  letter-spacing: var(--logo-spacing);
-  margin-bottom: calc(var(--space) * 0.6);
+  font-size: var(--logo);                           /* Responsive font size */
+  font-weight: bold;                                /* Bold text */
+  color: #fff;                                      /* White text */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);    /* Shadow for depth and readability */
+  letter-spacing: var(--logo-spacing);             /* Spaced out letters */
+  margin-bottom: calc(var(--space) * 0.6);         /* Spacing below logo */
 }
 
+/* Logo subtitle styling */
 .logo-subtitle {
-  font-size: var(--subtitle);
-  color: #ffd700;
-  font-style: italic;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-  margin-bottom: var(--space);
+  font-size: var(--subtitle);                       /* Responsive font size */
+  color: #ffd700;                                   /* Gold color */
+  font-style: italic;                               /* Italicized text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);    /* Text shadow */
+  margin-bottom: var(--space);                      /* Spacing below */
 }
 
+/* Event title "A Vibrant Celebration of" */
 .event-title {
-  font-size: var(--title);
-  color: #fff;
-  margin-bottom: calc(var(--space) * 0.4);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  font-size: var(--title);                          /* Responsive font size */
+  color: #fff;                                      /* White text */
+  margin-bottom: calc(var(--space) * 0.4);         /* Spacing below */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);    /* Text shadow */
 }
 
+/* Event subtitle "Malaysian Culture and Tourism" */
 .event-subtitle {
-  font-size: var(--subtitle2);
-  color: #ffd700;
-  margin-bottom: calc(var(--space) * 1.4);
-  font-style: italic;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  font-size: var(--subtitle2);                      /* Responsive font size */
+  color: #ffd700;                                   /* Gold color */
+  margin-bottom: calc(var(--space) * 1.4);         /* Larger spacing below */
+  font-style: italic;                               /* Italicized text */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);    /* Text shadow */
 }
 
 /* ========= Countdown ========= */
+/* Countdown container - holds all 4 time units (days, hours, minutes, seconds) */
 .countdown {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(12px, 3vw, 30px);
-  margin-bottom: var(--space);
+  display: flex;                                    /* Flexbox layout */
+  flex-wrap: wrap;                                  /* Allow wrapping on small screens */
+  justify-content: center;                          /* Center items horizontally */
+  gap: clamp(12px, 3vw, 30px);                     /* Responsive spacing between items */
+  margin-bottom: var(--space);                      /* Spacing below countdown */
 }
 
+/* Individual time unit box (days, hours, minutes, or seconds) */
 .time-unit {
-  flex: 1 1 clamp(130px, 22%, 220px);
-  min-width: 0;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(5px);
-  border: 2px solid rgba(212, 175, 55, 0.4);
-  border-radius: 15px;
-  padding: clamp(14px, 2.6vw, 25px) clamp(12px, 2vw, 20px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  flex: 1 1 clamp(130px, 22%, 220px);              /* Flexible sizing with min/ideal/max */
+  min-width: 0;                                     /* Allows flex items to shrink below content size */
+  background: rgba(255, 255, 255, 0.12);           /* Semi-transparent white background */
+  backdrop-filter: blur(5px);                       /* Blur effect */
+  border: 2px solid rgba(212, 175, 55, 0.4);       /* Gold border */
+  border-radius: 15px;                              /* Rounded corners */
+  padding: clamp(14px, 2.6vw, 25px) clamp(12px, 2vw, 20px);  /* Responsive vertical and horizontal padding */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);       /* Drop shadow */
 }
 
+/* Countdown numbers (00) */
 .time-value {
-  font-size: var(--time-value);
-  font-weight: bold;
-  color: #ffd700;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
-  line-height: 1;
-  margin-bottom: clamp(6px, 1vw, 10px);
-  display: block;
+  font-size: var(--time-value);                     /* Large responsive font size */
+  font-weight: bold;                                /* Bold numbers */
+  color: #ffd700;                                   /* Gold color */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);    /* Strong text shadow */
+  line-height: 1;                                   /* Tight line height */
+  margin-bottom: clamp(6px, 1vw, 10px);            /* Spacing below number */
+  display: block;                                   /* Makes it a block element */
 }
 
+/* Countdown labels (DAYS, HOURS, etc) */
 .time-label {
-  font-size: var(--time-label);
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  font-size: var(--time-label);                     /* Smaller responsive font size */
+  color: #fff;                                      /* White text */
+  text-transform: uppercase;                        /* ALL CAPS */
+  letter-spacing: 2px;                              /* Spaced out letters */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);    /* Text shadow */
 }
 
 /* ========= Event details ========= */
+/* Event details section (date, location, time) */
 .event-details {
-  font-size: var(--details);
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-  line-height: 1.8;
+  font-size: var(--details);                        /* Responsive font size */
+  color: #fff;                                      /* White text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);    /* Text shadow */
+  line-height: 1.8;                                 /* Increased line spacing for readability */
 }
+
+/* Bold text within event details (the date) */
 .event-details strong {
-  color: #ffd700;
-  font-size: var(--details-strong);
+  color: #ffd700;                                   /* Gold color */
+  font-size: var(--details-strong);                /* Slightly larger font */
 }
 
 /* ========= Motion Pref (accessibility) ========= */
+/* Respects user's preference for reduced motion (accessibility feature) */
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
+  * { 
+    animation-duration: 0.01ms !important;          /* Nearly instant animations */
+    animation-iteration-count: 1 !important;        /* Only play once */
+    transition: none !important;                    /* Disable transitions */
+    scroll-behavior: auto !important;               /* Instant scrolling */
+  }
 }
 
 /* ========= Responsive Edges ========= */
-@media (max-width: 1024px) { body { background-attachment: scroll; } }
-@media (max-width: 480px)  { .time-unit { flex-basis: 48%; } .logo { letter-spacing: 2px; } }
+/* Tablet and below - fixes background on scroll */
+@media (max-width: 1024px) { 
+  body { background-attachment: scroll; }           /* Background scrolls with content (better performance) */
+}
+
+/* Small phones - adjust countdown layout */
+@media (max-width: 480px) { 
+  .time-unit { flex-basis: 48%; }                   /* 2 units per row */
+  .logo { letter-spacing: 2px; }                    /* Tighter letter spacing */
+}
+
+/* Landscape mode on short screens */
 @media (max-height: 500px) and (orientation: landscape) {
-  .container { padding: 16px; }
-  .countdown { gap: 10px; }
-  .time-unit { padding: 12px 10px; }
+  .container { padding: 16px; }                     /* Reduced padding */
+  .countdown { gap: 10px; }                         /* Tighter gaps */
+  .time-unit { padding: 12px 10px; }               /* Reduced padding */
 }
-@media (min-width: 1600px) { .container { width: min(85vw, 1200px); } }
 
-/* --- subtitle becomes a logo image --- */
+/* Large desktop screens */
+@media (min-width: 1600px) { 
+  .container { width: min(85vw, 1200px); }         /* Larger container on big screens */
+}
+
+/* --- Journey to Malaysia logo image --- */
 .jtm-logo{
-  height: var(--jtm-logo-h);
-  width: auto;
-  display: block;
-  margin-inline: auto;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,.35));
+  height: var(--jtm-logo-h);                        /* Responsive height */
+  width: auto;                                      /* Maintain aspect ratio */
+  display: block;                                   /* Block element */
+  margin-inline: auto;                              /* Center horizontally */
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,.35)); /* Drop shadow on image */
 }
 
-/* --- divider --- */
+/* --- Divider line --- */
+/* Horizontal rule with gradient effect */
 .divider{
-  border: 0;
-  height: 1px;
-  margin: clamp(16px, 3vw, 28px) 0;
+  border: 0;                                        /* Remove default border */
+  height: 1px;                                      /* Thin line */
+  margin: clamp(16px, 3vw, 28px) 0;                /* Vertical spacing */
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(212,175,55,.25) 15%,
-    rgba(212,175,55,.7) 50%,
-    rgba(212,175,55,.25) 85%,
-    transparent 100%
+    90deg,                                          /* Left to right gradient */
+    transparent 0%,                                 /* Transparent on edges */
+    rgba(212,175,55,.25) 15%,                      /* Faint gold */
+    rgba(212,175,55,.7) 50%,                       /* Bright gold in center */
+    rgba(212,175,55,.25) 85%,                      /* Faint gold */
+    transparent 100%                                /* Transparent on edges */
   );
 }
 
-/* --- partners / logos strip --- */
+/* --- Partners / logos strip --- */
+/* Container for both organiser and supporters sections */
 .partners{
-  display: grid;
-  gap: clamp(14px, 2.4vw, 22px);
-  margin-top: clamp(12px, 2vw, 20px);
+  display: grid;                                    /* Grid layout */
+  gap: clamp(14px, 2.4vw, 22px);                   /* Responsive gap between sections */
+  margin-top: clamp(12px, 2vw, 20px);              /* Spacing above */
 }
 
-/* Each block (Organised by / Supported by) — caption above, logos below */
+/* Each partner group (Organised by / Supported by) */
 .partners-group{
-  display: grid;
-  grid-template-columns: 1fr;
+  display: grid;                                    /* Grid layout */
+  grid-template-columns: 1fr;                       /* Single column */
   grid-template-areas:
-    "label"
-    "logos";
-  row-gap: clamp(8px, 1vw, 12px);
-  align-items: start;
+    "label"                                         /* Label on top */
+    "logos";                                        /* Logos below */
+  row-gap: clamp(8px, 1vw, 12px);                  /* Gap between label and logos */
+  align-items: start;                               /* Align items to top */
 }
 
-/* Label */
+/* Label text ("Organised by:" / "Supported by:") */
 .partners-label{
-  grid-area: label;
-  color: #fff;
-  opacity: .95;
-  font-size: clamp(12px, 1.6vw, 14px);
-  line-height: 1.2;
-  white-space: nowrap;
-  text-align: left;
+  grid-area: label;                                 /* Place in label area */
+  color: #fff;                                      /* White text */
+  opacity: .95;                                     /* Slightly transparent */
+  font-size: clamp(12px, 1.6vw, 14px);             /* Responsive font size */
+  line-height: 1.2;                                 /* Tight line height */
+  white-space: nowrap;                              /* Prevent text wrapping */
+  text-align: left;                                 /* Align left */
 }
 
-/* Generic logos container (flex; overridden for supporters) */
+/* Generic logos container (flex layout for organisers) */
 .logos-list{
-  grid-area: logos;
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(10px, 1.4vw, 16px);
-  align-items: center;
-  overflow: visible;
+  grid-area: logos;                                 /* Place in logos area */
+  display: flex;                                    /* Flexbox layout */
+  flex-wrap: wrap;                                  /* Allow wrapping */
+  gap: clamp(10px, 1.4vw, 16px);                   /* Responsive gap */
+  align-items: center;                              /* Vertically center logos */
+  overflow: visible;                                /* Show all content */
 }
 
-/* Generic logo plate look (no fixed height here) */
+/* Generic logo styling (applies to all logos) */
 .logos-list img{
-  display: block;
-  width: auto;
-  object-fit: contain;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(212,175,55,0.18);
-  border-radius: 8px;
-  padding: clamp(4px, 0.8vw, 8px);
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  display: block;                                   /* Block element */
+  width: auto;                                      /* Auto width maintains aspect ratio */
+  object-fit: contain;                              /* Fit image within bounds */
+  background: rgba(255,255,255,0.06);              /* Subtle white background */
+  border: 1px solid rgba(212,175,55,0.18);         /* Faint gold border */
+  border-radius: 8px;                               /* Rounded corners */
+  padding: clamp(4px, 0.8vw, 8px);                 /* Responsive padding */
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);           /* Subtle shadow */
 }
 
-/* Organisers: larger single plate */
+/* Organisers: larger single logo (Consulate General) */
 .partners-group.organisers .logos-list img{
-  height: var(--org-logo-h);
+  height: var(--org-logo-h);                        /* Larger height for organiser logo */
 }
 
-/* === Supporters: 2-line, tight grid; last two items on row 1 are square === */
+/* === Supporters: tight grid layout for multiple logos === */
 .supporters .logos-list{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;                          /* centered on wide & narrow */
-  gap: clamp(10px, 1.2vw, 16px);
-  width: 100%;                                      /* stay inside container */
+  display: flex;                                    /* Flexbox layout */
+  flex-wrap: wrap;                                  /* Allow wrapping */
+  justify-content: center;                          /* Center logos horizontally */
+  gap: clamp(10px, 1.2vw, 16px);                   /* Responsive gap */
+  width: 100%;                                      /* Full width */
 }
 
-/* Place items so row 2 starts from the left */
-.supporters .logos-list img:nth-child(1){ grid-row:1; grid-column:1; } /* EMA  */
-.supporters .logos-list img:nth-child(2){ grid-row:1; grid-column:2; } /* TM   */
-.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:1; } /* MH   */
-.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:3; } /* UEM  */
-.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:2; } /* MARA */
-.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* MASCA (square) */
-.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:4; } /* AMBC  (square) */
+/* Grid positioning for supporter logos (specific placement on desktop) */
+.supporters .logos-list img:nth-child(1){ grid-row:1; grid-column:1; } /* EMA - row 1, column 1 */
+.supporters .logos-list img:nth-child(2){ grid-row:1; grid-column:2; } /* TM - row 1, column 2 */
+.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:1; } /* MH - row 1, column 1 */
+.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:3; } /* UEM - row 1, column 3 */
+.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:2; } /* MARA - row 2, column 2 */
+.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* MASCA - row 2, column 3 (square) */
+.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:4; } /* AMBC - row 2, column 4 (square) */
 
-/* Default supporters plate sizing (non-square tiles) */
+/* Default supporters logo sizing (rectangular logos) */
 .supporters .logos-list img{
-  height: var(--supp-cell-h);
-  width: auto;
-  max-width: var(--supp-wide);
-  padding: clamp(6px, 0.8vw, 10px);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(212,175,55,0.18);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  height: var(--supp-cell-h);                       /* Uniform height */
+  width: auto;                                      /* Auto width */
+  max-width: var(--supp-wide);                     /* Max width constraint */
+  padding: clamp(6px, 0.8vw, 10px);                /* Responsive padding */
+  background: rgba(255,255,255,0.06);              /* Subtle background */
+  border: 1px solid rgba(212,175,55,0.18);         /* Faint border */
+  border-radius: 8px;                               /* Rounded corners */
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);           /* Shadow */
 }
 
-/* Make the 3rd & 4th supporters logos perfect squares */
+/* Last two supporter logos are perfect squares */
 .supporters .logos-list img:nth-child(6),
 .supporters .logos-list img:nth-child(7){
-  width: var(--supp-square);
-  flex: 0 0 var(--supp-square);
+  width: var(--supp-square);                        /* Fixed square width */
+  flex: 0 0 var(--supp-square);                    /* Don't grow or shrink */
 }
 
-/* Two groups side-by-side on wider screens */
+/* Desktop: side-by-side layout for organisers and supporters */
 @media (min-width: 900px){
-  .partners{ grid-template-columns: 1fr 2fr; align-items: start; }
+  .partners{ 
+    grid-template-columns: 1fr 2fr;                 /* Organisers narrower, supporters wider */
+    align-items: start;                             /* Align to top */
+  }
 }
 
-
+/* Mobile/tablet: stack logos in 2-column grid */
 @media (max-width: 700px){
   .supporters .logos-list{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 2 per row */
-    grid-auto-flow: row dense;                            /* no holes */
-    gap: 12px;
-    justify-items: center;
-    width: 100%;
+    display: grid;                                  /* Switch to grid layout */
+    grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 2 equal columns */
+    grid-auto-flow: row dense;                      /* Fill gaps automatically */
+    gap: 12px;                                      /* Fixed gap */
+    justify-items: center;                          /* Center items in grid cells */
+    width: 100%;                                    /* Full width */
   }
 
-  /* Reset everything that could hide/squeeze images */
+  /* Reset all desktop positioning for mobile */
   .supporters .logos-list img{
-    width: 100% !important;
-    max-width: 100%;
-    height: clamp(52px, 15vw, 70px);
-    object-fit: contain;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    aspect-ratio: auto !important;
-    flex: initial !important;
+    width: 100% !important;                         /* Full width of grid cell */
+    max-width: 100%;                                /* No max width limit */
+    height: clamp(52px, 15vw, 70px);               /* Responsive height */
+    object-fit: contain;                            /* Maintain aspect ratio */
+    grid-column: auto !important;                   /* Auto column placement */
+    grid-row: auto !important;                      /* Auto row placement */
+    aspect-ratio: auto !important;                  /* No forced aspect ratio */
+    flex: initial !important;                       /* Reset flex properties */
   }
 
-    /* center captions and organiser area */
-  .partners-group { justify-items: center; }
-  .partners-label { text-align: center; }
+  .jtm-logo {
+    display: block;
+    margin: 0 auto;              /* center */
+    width: min(80vw, 320px);     /* smaller on mobile */
+    height: auto;                /* stop height from forcing overflow */
+    max-width: 100%;             /* never exceed container */
+  }
 
+  /* Center align labels and organiser section on mobile */
+  .partners-group { justify-items: center; }        /* Center grid items */
+  .partners-label { text-align: center; }           /* Center label text */
+
+  /* Organiser section centering */
   .partners-group.organisers .logos-list{
-    justify-content: center;   /* flex container centering */
-    width: 100%;
+    justify-content: center;                        /* Center in flex container */
+    width: 100%;                                    /* Full width */
   }
   .partners-group.organisers .logos-list img{
-    margin-inline: auto;       /* center the image inside the flex line */
-    height: clamp(90px, 28vw, 140px); /* smaller crest on phones */
+    margin-inline: auto;                            /* Center image */
+    height: clamp(90px, 28vw, 140px);              /* Smaller logo on mobile */
   }
 
-    :root{
-    --logo:       clamp(24px, 8vw, 48px);
-    --title:      clamp(20px, 6.2vw, 28px);
-    --subtitle:   clamp(12px, 4vw, 18px);
-    --subtitle2:  clamp(12px, 3.6vw, 18px);
-    --time-value: clamp(28px, 10vw, 44px);
-    --time-label: clamp(10px, 3.2vw, 14px);
-    --details:    clamp(13px, 3.5vw, 16px);
-    --details-strong: clamp(14px, 3.8vw, 18px);
+  /* Adjust typography variables for mobile */
+  :root{
+    --logo: clamp(24px, 8vw, 48px);                /* Smaller logo text */
+    --title: clamp(20px, 6.2vw, 28px);             /* Smaller title */
+    --subtitle: clamp(12px, 4vw, 18px);            /* Smaller subtitle */
+    --subtitle2: clamp(12px, 3.6vw, 18px);         /* Smaller subtitle2 */
+    --time-value: clamp(28px, 10vw, 44px);         /* Smaller countdown numbers */
+    --time-label: clamp(10px, 3.2vw, 14px);        /* Smaller countdown labels */
+    --details: clamp(13px, 3.5vw, 16px);           /* Smaller details */
+    --details-strong: clamp(14px, 3.8vw, 18px);    /* Smaller bold details */
   }
 }
 
+/* Large desktop: increase font sizes */
 @media (min-width: 1200px){
   :root{
-    --logo:       clamp(48px, 5vw, 90px);
-    --title:      clamp(32px, 2.4vw, 48px);
-    --subtitle:   clamp(16px, 1.4vw, 24px);
-    --subtitle2:  clamp(32px, 1.2vw, 32px);
-    --time-value: clamp(50px, 4.6vw, 80px);
-    --time-label: clamp(12px, 1.1vw, 18px);
+    --logo: clamp(48px, 5vw, 90px);                /* Larger logo */
+    --title: clamp(32px, 2.4vw, 48px);             /* Larger title */
+    --subtitle: clamp(16px, 1.4vw, 24px);          /* Larger subtitle */
+    --subtitle2: clamp(32px, 1.2vw, 32px);         /* Larger subtitle2 */
+    --time-value: clamp(50px, 4.6vw, 80px);        /* Larger countdown */
+    --time-label: clamp(12px, 1.1vw, 18px);        /* Larger labels */
   }
 }
 
-
-/* Super-small phones: stack one per row */
+/* Super-small phones: single column for supporter logos */
 @media (max-width: 380px){
   .supporters .logos-list{
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;                     /* Single column layout */
   }
 }
-

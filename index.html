@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Journey to Malaysia</title>
+    <!-- Browser tab icon -->
     <link rel="icon" type="image/png" href="media/logo/JTMLogo.png" />
+    <!-- Link to external CSS stylesheet for styling -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Main container - holds all page content with glassmorphism card effect -->
     <div class="container">
+      <!-- Logo section at the top of the page -->
       <div class="logo-section">
         <div class="logo-subtitle">
+          <!-- Journey to Malaysia logo image -->
           <img
             class="jtm-logo"
             src="media/logos/JTMLogo.png"
@@ -19,55 +24,83 @@
         </div>
       </div>
 
+      <!-- Main event title text -->
       <div class="event-title">A Vibrant Celebration of</div>
+
+      <!-- Event subtitle with yellow/gold styling -->
       <div class="event-subtitle">Malaysian Culture and Tourism</div>
 
+      <!-- Countdown timer container with 4 time units -->
       <div class="countdown">
+        <!-- Days counter -->
         <div class="time-unit">
           <span class="time-value" id="days">00</span>
           <span class="time-label">Days</span>
         </div>
+
+        <!-- Hours counter -->
         <div class="time-unit">
           <span class="time-value" id="hours">00</span>
           <span class="time-label">Hours</span>
         </div>
+
+        <!-- Minutes counter -->
         <div class="time-unit">
           <span class="time-value" id="minutes">00</span>
           <span class="time-label">Minutes</span>
         </div>
+
+        <!-- Seconds counter -->
         <div class="time-unit">
           <span class="time-value" id="seconds">00</span>
           <span class="time-label">Seconds</span>
         </div>
       </div>
 
+      <!-- Event details: date, location, and time -->
       <div class="event-details">
         <strong>15 November 2025</strong><br />
         Forrest Place, Perth CBD<br />
         9:00am - 6:00pm
       </div>
 
-      <!-- 2) Divider line -->
+      <!-- Decorative horizontal divider line with gradient -->
       <hr class="divider" />
 
-      <!-- 3) logoss strip -->
+      <!-- Partners section containing organisers and supporters -->
       <section class="partners">
+        <!-- Organiser section - single logo -->
         <div class="partners-group organisers">
           <span class="partners-label">Organised by:</span>
           <div class="logos-list">
+            <!-- Consulate General of Malaysia logo -->
             <img src="media/logos/CG.png" alt="Consulate General of Malaysia" />
           </div>
         </div>
 
+        <!-- Supporters section - multiple logos in grid layout -->
         <div class="partners-group supporters">
           <span class="partners-label">Supported by:</span>
           <div class="logos-list">
+            <!-- Education Malaysia Australia logo -->
             <img src="media/logos/EMA.png" alt="Education Malaysia Australia" />
+
+            <!-- Tourism Malaysia logo -->
             <img src="media/logos/TM.png" alt="Tourism Malaysia" />
+
+            <!-- Malaysia Airlines logo -->
             <img src="media/logos/MH.png" alt="Malaysia Airlines" />
+
+            <!-- UEM logo -->
             <img src="media/logos/UEM.png" alt="UEM" />
+
+            <!-- Universiti Teknologi MARA logo -->
             <img src="media/logos/MARA.png" alt="Universiti Teknologi MARA" />
+
+            <!-- MASCA logo (square format) -->
             <img src="media/logos/MASCA.png" alt="MASCA" />
+
+            <!-- Australian Malaysian Business Council logo (square format) -->
             <img
               src="media/logos/AMBC.png"
               alt="Australian Malaysian Business Council"
@@ -77,42 +110,67 @@
       </section>
     </div>
 
+    <!-- JavaScript for countdown timer functionality -->
     <script>
-      // Countdown timer
+      // Set the target event date and time (November 15, 2025 at 9:00 AM)
       const eventDate = new Date("November 15, 2025 09:00:00").getTime();
 
+      // Function to calculate and update the countdown display
       function updateCountdown() {
+        // Get current date/time in milliseconds
         const now = new Date().getTime();
+
+        // Calculate the time difference between now and event date
         const distance = eventDate - now;
 
+        // Calculate days remaining
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        // Calculate hours remaining (remainder after removing full days)
         const hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
         );
+
+        // Calculate minutes remaining (remainder after removing full hours)
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Calculate seconds remaining (remainder after removing full minutes)
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+        // Update the days display with leading zero if needed
         document.getElementById("days").textContent = String(days).padStart(
           2,
           "0"
         );
+
+        // Update the hours display with leading zero if needed
         document.getElementById("hours").textContent = String(hours).padStart(
           2,
           "0"
         );
+
+        // Update the minutes display with leading zero if needed
         document.getElementById("minutes").textContent = String(
           minutes
         ).padStart(2, "0");
+
+        // Update the seconds display with leading zero if needed
         document.getElementById("seconds").textContent = String(
           seconds
         ).padStart(2, "0");
 
+        // Check if the countdown has reached zero (event has started)
         if (distance < 0) {
+          // Replace countdown with "Event Has Started" message
           document.querySelector(".countdown").innerHTML =
             '<h1 style="color:#FFD700;font-size:48px;">The Event Has Started!</h1>';
         }
       }
+
+      // Run the countdown function immediately on page load
       updateCountdown();
+
+      // Update the countdown every 1000 milliseconds (1 second)
       setInterval(updateCountdown, 1000);
     </script>
   </body>
