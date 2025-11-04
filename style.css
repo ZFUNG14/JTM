@@ -25,7 +25,7 @@
   --details-strong: clamp(16px, 2vw, 22px);         /* Bold event details */
 
   /* Hero image sizes */
-  --jtm-logo-h: clamp(350px, 8vw, 800px);           /* Journey to Malaysia logo height */
+  --jtm-logo-h: clamp(350px, 24vw, 800px);           /* Journey to Malaysia logo height */
   --org-logo-h: clamp(160px, 4.5vw, 800px);         /* Organiser logo height */
 
   /* Supporters tile sizing (desktop defaults) */
