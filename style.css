@@ -21,7 +21,7 @@
   --subtitle2: clamp(12px, 1.6vw, 18px);            /* Secondary subtitle */
   --time-value: clamp(34px, 6vw, 72px);             /* Countdown numbers */
   --time-label: clamp(12px, 1.6vw, 18px);           /* Countdown labels (Days, Hours, etc) */
-  --details: clamp(14px, 1.8vw, 18px);              /* Event details text */
+  --details: clamp(12px, 1.8vw, 18px);              /* Event details text */
   --details-strong: clamp(16px, 2vw, 22px);         /* Bold event details */
 
   /* Hero image sizes */
@@ -40,20 +40,24 @@ body {
   font-family: "Georgia", serif;                     /* Elegant serif font */
   background: #7b2f21 url("media/background.png") center/cover no-repeat fixed;  /* Red-brown bg with texture */
   min-height: 100dvh;                                /* Full viewport height (dynamic for mobile) */
-  display: flex;                                     /* Flexbox for centering */
-  justify-content: center;                           /* Center horizontally */
+  display: flex;      
+  flex-direction: column;     /* ← stack children top-to-bottom */                               /* Flexbox for centering */
+  justify-content: flex-start;                           /* Center horizontally */
   align-items: center;                               /* Center vertically */
   overflow: auto;                                    /* Allow scrolling if needed */
   position: relative;                                /* For absolute positioning of overlay */
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
            env(safe-area-inset-bottom) env(safe-area-inset-left);  /* Safe area padding for notched devices */
-}
+  gap: var(--space);          /* space between container and QR */
+  }
 
 /* Textured background overlay - creates a crosshatch pattern */
 body::before {
   content: "";                                       /* Empty content required for pseudo-element */
   position: absolute;                                /* Positioned over entire body */
   inset: 0;                                         /* Shorthand for top:0, right:0, bottom:0, left:0 */
+  z-index: 0;
+  pointer-events: none;  /* allow clicks to pass through */
   background-image:
     /* 45-degree diagonal lines */
     repeating-linear-gradient(
@@ -64,6 +68,11 @@ body::before {
       -45deg, transparent, transparent 2px, rgba(139,58,58,.3) 2px, rgba(139,58,58,.3) 4px
     );
   opacity: 0.3;                                      /* Semi-transparent overlay */
+}
+
+.container, .testing, .site-footer {
+  position: relative;
+  z-index: 1;            /* ensure these sit above the overlay */
 }
 
 /* ========= Card/Container ========= */
@@ -393,7 +402,7 @@ body::before {
     --subtitle2: clamp(12px, 3.6vw, 18px);         /* Smaller subtitle2 */
     --time-value: clamp(28px, 10vw, 44px);         /* Smaller countdown numbers */
     --time-label: clamp(10px, 3.2vw, 14px);        /* Smaller countdown labels */
-    --details: clamp(13px, 3.5vw, 16px);           /* Smaller details */
+    --details: clamp(64px, 3.5vw, 72px);           /* Smaller details */
     --details-strong: clamp(14px, 3.8vw, 18px);    /* Smaller bold details */
   }
 }
@@ -415,4 +424,146 @@ body::before {
   .supporters .logos-list{
     grid-template-columns: 1fr;                     /* Single column layout */
   }
+}
+
+.testing{
+  display: flex;
+  justify-content: center;    /* center the QR horizontally */
+  width: 100%;
+  margin-bottom: var(--space);
+}
+
+.testing img{
+  max-width: 220px;           /* or whatever size you like */
+  height: auto;
+}
+
+
+/*<!-------------------------------Footer area with contact details------------------------------------------------> */
+/* Make footer span the full width even though body uses flex/center */
+.site-footer {
+  align-self: stretch;          /* important when body is display:flex */
+  width: 100%;
+  background: #471713;
+  color: #ccc;
+  border-top: 2px solid rgba(212,175,55,.35);
+}
+
+.site-footer a { text-decoration: none; }
+
+/* Layout inside the footer */
+.footer-container {
+  max-width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 20px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-note {
+  font-style: italic;
+  color: #aaa;
+  margin: 0 0 4px 0;
+  font-family: "Times New Roman", serif;
+}
+
+.footer-contact a {
+  color: #00adb5;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-contact a:hover { text-decoration: underline; }
+
+/* Social icons row */
+.footer-social { display: flex; gap: 10px; }
+.footer-social .social {
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(255,255,255,.05);
+  color: #fff;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+  text-decoration: none;       /* kill underline on icon fonts */
+  outline: none;
+}
+.footer-social .social:focus-visible {
+  outline: 2px solid #ffd700;  /* accessible focus ring */
+  outline-offset: 2px;
+}
+.footer-social .social:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.10);
+  color: #ffd700;
+}
+.footer-social i { font-size: 18px; line-height: 1; }
+
+/* Stack nicely on small screens */
+@media (max-width: 640px) {
+  .footer-container { grid-template-columns: 1fr; gap: 10px; }
+  .footer-social { justify-content: center; }
+  .footer-left { text-align: center; }
+}
+
+/* Flip copyright & social icons on small screens */
+@media (max-width: 640px) {
+  .footer-container {
+    display: flex;              /* switch from grid → flex */
+    flex-direction: column-reverse;  /* puts social icons ABOVE the © line */
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+
+  .footer-left { text-align: center; }
+  .footer-social { justify-content: center; }
+}
+
+/* Tooltips for footer social icons */
+.footer-social .social { position: relative; }
+
+/* bubble */
+.footer-social .social::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 10px);     /* show above the icon */
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 6px 8px;
+  font-size: 12px;
+  line-height: 1;
+  color: #eee;
+  background: rgba(0,0,0,.8);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+  z-index: 2;
+}
+
+/* little arrow */
+.footer-social .social::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0,0,0,.8);
+  opacity: 0;
+  transition: opacity .15s ease;
+  z-index: 2;
+}
+
+/* show on hover and keyboard focus */
+.footer-social .social:hover::after,
+.footer-social .social:hover::before,
+.footer-social .social:focus-visible::after,
+.footer-social .social:focus-visible::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }

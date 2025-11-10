@@ -8,10 +8,16 @@
     <link rel="icon" type="image/png" href="media/logo/JTMLogo.png" />
     <!-- Link to external CSS stylesheet for styling -->
     <link rel="stylesheet" href="style.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Main container - holds all page content with glassmorphism card effect -->
-    <div class="container">
+    <div class="container" data-aos="fade-up">
       <!-- Logo section at the top of the page -->
       <div class="logo-section">
         <div class="logo-subtitle">
@@ -110,8 +116,75 @@
       </section>
     </div>
 
+    <footer class="site-footer" data-aos="fade-up">
+      <div class="footer-container">
+        <div class="footer-left">
+          <p class="footer-note">
+            © 2025 Journey to Malaysia. All rights reserved.
+          </p>
+        </div>
+
+        <nav class="footer-social" aria-label="Social media">
+          <!-- Put your real URLs in href="" -->
+          <a
+            class="social"
+            href="mailto:journeytomalaysiaperth@gmail.com"
+            target="_blank"
+            rel="noopener"
+            aria-label="Email"
+            data-tip="Email Us!"
+          >
+            <i class="fa-regular fa-envelope"></i>
+          </a>
+          <a
+            class="social"
+            href="https://www.facebook.com/journeytomalaysiaperth"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+            data-tip="Follow us on Facebook!"
+          >
+            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a
+            class="social"
+            href="https://www.instagram.com/journeytomalaysia_perth/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+            data-tip="Follow us on Instagram!"
+          >
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a
+            class="social"
+            href="https://www.tiktok.com/@journeytomalaysia_perth"
+            target="_blank"
+            rel="noopener"
+            aria-label="TikTok"
+            data-tip="Follow us on TikTok!"
+          >
+            <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- AOS (Animate On Scroll) Library for scroll animations -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <!-- JavaScript for countdown timer functionality -->
     <script>
+      window.addEventListener("load", () => {
+        AOS.init({
+          duration: 800,
+          once: false,
+          // Respect reduced motion users (don’t animate in that case)
+          disable: () =>
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        });
+        AOS.refresh(); // recalc after images/fonts finish
+      });
       // Set the target event date and time (November 15, 2025 at 9:00 AM)
       const eventDate = new Date("November 15, 2025 09:00:00").getTime();
 
