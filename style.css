@@ -623,3 +623,104 @@ body::before {
 
 /* (Optional) a touch more space below event details so the form isn't cramped */
 .event-details { margin-bottom: var(--space); }
+
+/* ===== Day Schedule ===== */
+.day-schedule { margin-top: var(--space); text-align: left; }
+.sched-title {
+  font-size: clamp(18px, 2.4vw, 30px);
+  color: #ffd700; text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 6px;
+}
+.sched-note, .sched-footnote {
+  text-align: center; color: #fff; opacity: .9;
+  font-size: clamp(12px, 1.6vw, 16px);
+  margin-bottom: calc(var(--space) * .8);
+}
+
+.sched-wrap {
+  position: relative;
+  background: rgba(255,255,255,.06);
+  border: 2px solid rgba(212,175,55,.28);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35);
+}
+
+/* Notion-style “now” line */
+.now-line {
+  position: absolute; left: 0; right: 0; height: 0;
+  border-top: 2px solid #f25b5b; z-index: 2; display: none;
+}
+.now-line .dot {
+  position: absolute; left: 12px; top: -5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #f25b5b; box-shadow: 0 0 0 4px rgba(242,91,91,.25);
+}
+
+/* List becomes a time-scaled stack; JS sets heights & top */
+.sched-list { position: relative; padding: 16px 16px 18px 16px; }
+.sched-item {
+  position: absolute; left: 0; right: 0;
+  display: grid; grid-template-columns: 110px 1fr; gap: 10px;
+  padding: 10px 12px; border-left: 3px solid rgba(212,175,55,.35);
+}
+.sched-item time {
+  color: #ffd700; font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.4);
+}
+.sched-item .what { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
+.sched-item .meta { display: block; opacity: .85; font-style: italic; }
+
+.sched-item.is-current {
+  background: linear-gradient(90deg, rgba(255,215,0,.12), transparent 55%);
+  border-left-color: #ffd700;
+}
+.sched-item.is-current::after {
+  content: "• LIVE"; color: #ffd700; font-weight: 700; margin-left: 8px;
+}
+
+@media (max-width: 520px){
+  .sched-item { grid-template-columns: 92px 1fr; padding: 8px 10px; }
+  .sched-item time { font-size: 12px; }
+  .sched-item .what { font-size: 14px; }
+}
+
+/* Schedule container padding */
+.sched-list { position: relative; padding: 18px 16px 22px 16px; }
+
+/* Each item becomes a little card so text never feels cramped */
+.sched-item {
+  position: absolute; left: 10px; right: 10px;
+  display: grid; grid-template-columns: 120px 1fr; gap: 12px;
+  padding: 12px 14px;
+  border-left: 3px solid rgba(212,175,55,.45);
+  background: rgba(0,0,0,.18);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  line-height: 1.28;
+}
+
+/* Times + text */
+.sched-item time {
+  color: #ffd700; font-weight: 700; align-self: start;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.4);
+}
+.sched-item .what { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
+.sched-item .meta { display: block; opacity: .85; font-style: italic; }
+
+/* LIVE highlight */
+.sched-item.is-current {
+  background: linear-gradient(90deg, rgba(255,215,0,.16), rgba(0,0,0,.18) 55%);
+  border-left-color: #ffd700;
+}
+.sched-item.is-current::after { content:"• LIVE"; color:#ffd700; font-weight:700; margin-left:8px; }
+
+/* Smaller screens: tighten grid and font sizes a touch */
+@media (max-width: 900px){
+  .sched-item { grid-template-columns: 108px 1fr; gap: 10px; padding: 10px 12px; }
+}
+@media (max-width: 520px){
+  .sched-item { grid-template-columns: 92px 1fr; padding: 10px 12px; }
+  .sched-item time { font-size: 12px; }
+  .sched-item .what { font-size: 14px; }
+}
+

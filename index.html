@@ -116,6 +116,170 @@
       </section>
     </div>
 
+    <!-- ===== Day Schedule (Highlights) ===== -->
+    <section
+      class="day-schedule"
+      id="schedule"
+      data-aos="fade-up"
+      aria-labelledby="sched-title"
+    >
+      <h2 class="sched-title" id="sched-title">Schedule</h2>
+      <!-- The wrapper knows the day’s start/end to scale the timeline -->
+      <div
+        class="sched-wrap"
+        data-start="2025-11-15T09:00:00+08:00"
+        data-end="2025-11-15T18:00:00+08:00"
+      >
+        <!-- Notion-style red “now” line -->
+        <div class="now-line" aria-hidden="true"><span class="dot"></span></div>
+
+        <!-- Each item has precise start/end so JS can size & highlight -->
+        <ul class="sched-list">
+          <li
+            class="sched-item"
+            data-start="2025-11-15T09:00:00+08:00"
+            data-end="2025-11-15T10:00:00+08:00"
+          >
+            <time>9:00–10:00</time>
+            <div class="what">
+              <strong>Festival Starts</strong>
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T10:00:00+08:00"
+            data-end="2025-11-15T11:00:00+08:00"
+          >
+            <time>10:00–11:00</time>
+            <div class="what">
+              <strong>Opening Ceremony & VIP Remarks</strong>
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T12:15:00+08:00"
+            data-end="2025-11-15T12:30:00+08:00"
+          >
+            <time>12:15–12:30</time>
+            <div class="what"><strong>Lion Dance</strong></div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T12:30:00+08:00"
+            data-end="2025-11-15T12:40:00+08:00"
+          >
+            <time>12:30–12:40</time>
+            <div class="what">
+              <strong>Traditional Chinese Performance</strong>
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T13:00:00+08:00"
+            data-end="2025-11-15T13:10:00+08:00"
+          >
+            <time>1:00–1:10</time>
+            <div class="what"><strong>UiTM Performance</strong></div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T13:10:00+08:00"
+            data-end="2025-11-15T13:25:00+08:00"
+          >
+            <time>1:10–1:25</time>
+            <div class="what"><strong>SISWA</strong> — live music & dance</div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T14:00:00+08:00"
+            data-end="2025-11-15T14:06:00+08:00"
+          >
+            <time>2:00–2:06</time>
+            <div class="what"><strong>Peranakan Dance</strong></div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T14:06:00+08:00"
+            data-end="2025-11-15T14:16:00+08:00"
+          >
+            <time>2:06–2:16</time>
+            <div class="what">
+              <strong>Silat</strong> — Gayong Australia Federation
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T14:30:00+08:00"
+            data-end="2025-11-15T14:40:00+08:00"
+          >
+            <time>2:30–2:40</time>
+            <div class="what"><strong>Student Duet</strong> performance</div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T15:10:00+08:00"
+            data-end="2025-11-15T15:24:00+08:00"
+          >
+            <time>3:10–3:24</time>
+            <div class="what"><strong>Malaysian Fashion Show</strong></div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T15:24:00+08:00"
+            data-end="2025-11-15T15:38:00+08:00"
+          >
+            <time>3:24–3:38</time>
+            <div class="what">
+              <strong>Surprise Flashmob</strong>
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T16:00:00+08:00"
+            data-end="2025-11-15T16:15:00+08:00"
+          >
+            <time>4:00–4:15</time>
+            <div class="what">
+              <strong>Lucky Draw 2</strong>
+            </div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T16:30:00+08:00"
+            data-end="2025-11-15T16:45:00+08:00"
+          >
+            <time>4:30–4:45</time>
+            <div class="what"><strong>UiTM Performance</strong></div>
+          </li>
+
+          <li
+            class="sched-item"
+            data-start="2025-11-15T17:45:00+08:00"
+            data-end="2025-11-15T18:00:00+08:00"
+          >
+            <time>5:45–6:00</time>
+            <div class="what"><strong>Closing Note</strong> & end of event</div>
+          </li>
+        </ul>
+      </div>
+
+      <p class="sched-footnote">
+        Plus DJ Rhythm N’Flo sets in between performances.
+      </p>
+    </section>
+
     <!-- Lucky Draw (embedded Google Form) -->
     <section
       class="lucky-draw"
@@ -281,6 +445,102 @@
 
       // Update the countdown every 1000 milliseconds (1 second)
       setInterval(updateCountdown, 1000);
+
+      // === Schedule: scale-by-time layout with anti-overlap spacing ===
+      function initSchedule() {
+        const wrap = document.querySelector(".sched-wrap");
+        if (!wrap) return;
+
+        // Responsive scaling: taller on smaller screens
+        const vw = Math.max(
+          document.documentElement.clientWidth,
+          window.innerWidth || 0
+        );
+        const PX_PER_MIN = vw < 520 ? 2.1 : vw < 900 ? 1.6 : 1.3; // pixels per minute
+        const MIN_BLOCK = vw < 520 ? 56 : 44; // minimum visible height for any item
+        const MIN_GAP = vw < 520 ? 12 : 10; // space between items
+
+        const dayStart = new Date(wrap.dataset.start);
+        const dayEnd = new Date(wrap.dataset.end);
+        const totalMin = Math.max(1, (dayEnd - dayStart) / 60000);
+
+        // initial height by time scale; we may grow it if we push items down
+        let wrapH = totalMin * PX_PER_MIN + 32;
+
+        const items = [...wrap.querySelectorAll(".sched-item")].sort(
+          (a, b) => new Date(a.dataset.start) - new Date(b.dataset.start)
+        );
+
+        let lastBottom = -Infinity;
+        const rows = [];
+
+        items.forEach((el) => {
+          const s = new Date(el.dataset.start);
+          const e = new Date(el.dataset.end);
+          const fromStartMin = (s - dayStart) / 60000;
+          const durMin = Math.max(6, (e - s) / 60000);
+
+          // target top by exact time, then enforce minimum separation
+          let top = fromStartMin * PX_PER_MIN + 8;
+          let height = Math.max(durMin * PX_PER_MIN - 4, MIN_BLOCK);
+
+          // push down if it would collide with the previous block
+          if (top < lastBottom + MIN_GAP) top = lastBottom + MIN_GAP;
+
+          el.style.top = top + "px";
+          el.style.height = height + "px";
+
+          lastBottom = top + height;
+          rows.push({ el, s, e });
+          wrapH = Math.max(wrapH, lastBottom + 16);
+        });
+
+        // grow the wrapper if needed
+        wrap.style.height = wrapH + "px";
+
+        const nowLine = wrap.querySelector(".now-line");
+
+        function perthNow() {
+          try {
+            return new Date(
+              new Date().toLocaleString("en-US", {
+                timeZone: "Australia/Perth",
+              })
+            );
+          } catch {
+            return new Date();
+          }
+        }
+
+        function tick() {
+          const now = perthNow();
+          const sameDay =
+            now.toISOString().slice(0, 10) ===
+            dayStart.toISOString().slice(0, 10);
+
+          if (!sameDay) {
+            nowLine.style.display = "none";
+          } else {
+            const mins = Math.min(
+              totalMin,
+              Math.max(0, (now - dayStart) / 60000)
+            );
+            nowLine.style.display = "block";
+            nowLine.style.top = mins * PX_PER_MIN + 8 + "px";
+          }
+
+          rows.forEach((r) => {
+            if (now >= r.s && now < r.e) r.el.classList.add("is-current");
+            else r.el.classList.remove("is-current");
+          });
+        }
+
+        tick();
+        setInterval(tick, 30000);
+      }
+
+      // Run after your AOS init
+      window.addEventListener("load", initSchedule);
     </script>
   </body>
 </html>
