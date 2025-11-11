@@ -567,3 +567,59 @@ body::before {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* Lucky Draw section */
+.lucky-draw {
+  margin-top: var(--space);
+  text-align: center;
+}
+.lucky-title {
+  font-size: clamp(18px, 2.4vw, 30px);
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,.6);
+  margin-bottom: 6px;
+}
+.lucky-note {
+  font-size: clamp(12px, 1.6vw, 16px);
+  color: #fff;
+  opacity: .9;
+  margin-bottom: calc(var(--space) * .8);
+}
+
+/* Frame wrapper styled like the main card */
+.lucky-frame-wrap {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(212,175,55,0.30);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35);
+}
+
+/* Responsive iframe height for laptop + mobile */
+.lucky-frame {
+  display: block;
+  width: 100%;
+  height: clamp(700px, 110vh, 1500px);
+  /* Google adds its own background—keep ours subtle */
+  background: rgba(0,0,0,.05);
+}
+
+/* Make it taller on small screens so there’s less inner scrolling */
+@media (max-width: 640px) {
+  .lucky-frame { height: clamp(680px, 140vh, 1800px); }
+}
+
+/* Fallback link styling */
+.lucky-direct {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffd700;
+  text-decoration: none;
+}
+.lucky-direct:hover { text-decoration: underline; }
+
+/* (Optional) a touch more space below event details so the form isn't cramped */
+.event-details { margin-bottom: var(--space); }
