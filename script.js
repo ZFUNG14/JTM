@@ -69,9 +69,9 @@ function initSchedule() {
           ? 1.6
           : 2.2,
       minBlock: vw < 520 ? 64 : vw < 900 ? 56 : 48,
-      minGap: vw < 520 ? 14 : 12,
+      minGap: vw < 520 ? 12 : 10,
       // hard cap really long empty windows so the UI never looks "stretched"
-      maxGap: vw >= 1400 ? 28 : vw >= 900 ? 24 : 20,
+      maxGap: vw >= 1400 ? 16 : vw >= 900 ? 14 : 12,
     };
   }
 
