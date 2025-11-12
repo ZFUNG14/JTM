@@ -8,35 +8,72 @@
 
 /* ========= Fluid Scales & Tokens ========= */
 /* CSS custom properties (variables) that scale responsively using clamp() */
+/* ===== Base tokens + default sizes ===== */
 :root {
-  /* Spacing & radii - scales between min and max values based on viewport width */
-  --space: clamp(12px, 2.2vw, 32px);      /* General spacing unit */
-  --radius: clamp(14px, 2vw, 30px);       /* Border radius for rounded corners */
+  /* Spacing & radii */
+  --space: clamp(12px, 2.2vw, 32px);
+  --radius: clamp(14px, 2vw, 30px);
 
-  /* Type scales - responsive font sizes */
-  --logo: clamp(32px, 6vw, 72px);                    /* Main logo text size */
-  --logo-spacing: clamp(2px, 0.8vw, 10px);          /* Letter spacing for logo */
-  --subtitle: clamp(14px, 2vw, 24px);               /* Subtitle text size */
-  --title: clamp(20px, 3vw, 36px);                 /* Event title size */
-  --subtitle2: clamp(12px, 3.6vw, 18px);            /* Secondary subtitle */
-  --time-value: clamp(34px, 6vw, 72px);             /* Countdown numbers */
-  --time-label: clamp(12px, 1.6vw, 18px);           /* Countdown labels (Days, Hours, etc) */
-  --details: clamp(12px, 1.8vw, 18px);              /* Event details text */
-  --details-strong: clamp(16px, 2vw, 22px);         /* Bold event details */
+  /* Type scales → tuned for mid screens (700–1199px) */
+  --logo:         clamp(32px, 6vw, 64px);
+  --logo-spacing: clamp(2px, 0.8vw, 10px);
+  --title:        clamp(28px, 3.8vw, 44px);   /* between mobile 30 and desktop 48 */
+  --subtitle:     clamp(14px, 2.2vw, 20px);
+  --subtitle2:    clamp(18px, 2.8vw, 26px);   /* mid between mobile 22 and desktop 30 */
+  --time-value:   clamp(36px, 6.5vw, 60px);
+  --time-label:   clamp(12px, 1.5vw, 16px);
+  --details:      clamp(15px, 1.8vw, 20px);
+  --details-strong: clamp(20px, 2.2vw, 26px);
+  --partners-label-size: clamp(16px, 1.6vw, 22px);
+  --section-title: clamp(32px, 3vw, 56px);    /* between mobile 50 and desktop 72 */
 
-  /* Hero image sizes */
-  --jtm-logo-h: clamp(350px, 24vw, 800px);           /* Journey to Malaysia logo height */
-  --org-logo-h: clamp(160px, 4.5vw, 800px);         /* Organiser logo height */
+  /* Images / layout tokens */
+  --jtm-logo-h:   clamp(350px, 24vw, 800px);
+  --org-logo-h:   clamp(160px, 4.5vw, 800px);
 
-  /* Supporters tile sizing (desktop defaults) */
-  --supp-cell-h: clamp(56px, 5.2vw, 90px);          /* Uniform height for supporter logos */
-  --supp-wide: clamp(200px, 22vw, 320px);           /* Width for rectangular logos */
-  --supp-square: var(--supp-cell-h);                /* Square logos use same as height */
+  /* Supporters */
+  --supp-cell-h:  clamp(56px, 5.2vw, 90px);
+  --supp-wide:    clamp(200px, 22vw, 320px);
+  --supp-square:  var(--supp-cell-h);
 
-    --form-max-width: 720px;   /* page width for the Lucky Draw card */
-  --form-embed-h: 680px;     /* iframe height on desktop (tweak 600–780) */
-  --form-embed-h-sm: 760px;  /* iframe height on small screens */
+  /* Lucky draw */
+  --form-max-width: 720px;
+  --form-embed-h:   680px;
+  --form-embed-h-sm:760px;
 }
+
+/* ===== Mobile tweaks (<700px) ===== */
+@media (max-width: 700px) {
+  :root{
+    --logo:       clamp(24px, 8vw, 48px);
+    --title:      clamp(28px, 6.2vw, 30px);
+    --subtitle:   clamp(12px, 4vw, 18px);
+    --subtitle2:  clamp(9px, 4vw, 22px);
+    --partners-label-size: clamp(18px, 3.8vw, 27px);
+    --time-value: clamp(28px, 10vw, 44px);
+    --time-label: clamp(11px, 3.2vw, 14px);
+    --details: clamp(16px, 4vw, 19px);
+    --details-strong: clamp(20px, 5vw, 24px);
+    --section-title: clamp(42px, 5vw, 50px);
+  }
+}
+
+/* ===== Large desktop tweaks (≥1200px) ===== */
+@media (min-width: 1200px){
+  :root{
+    --logo:       clamp(48px, 5vw, 90px);
+    --title:      clamp(48px, 2.4vw, 48px);
+    --subtitle:   clamp(16px, 1.4vw, 24px);
+    --subtitle2:  clamp(20px, 2.2vw, 30px);
+    --time-value: clamp(50px, 4.6vw, 80px);
+    --time-label: clamp(12px, 1.1vw, 18px);
+    --details: clamp(16px, 1.3vw, 22px);
+    --details-strong: clamp(22px, 1.8vw, 30px);
+    --partners-label-size: clamp(16px, 1.2vw, 22px);
+    --section-title: clamp(60px, 2.2vw, 72px); 
+  }
+}
+
 
 /* ========= Page ========= */
 /* Body styling - creates the main background and centers content */
@@ -257,7 +294,7 @@ body::before {
   grid-area: label;                                 /* Place in label area */
   color: #fff;                                      /* White text */
   opacity: .95;                                     /* Slightly transparent */
-  font-size: clamp(12px, 1.6vw, 14px);             /* Responsive font size */
+  font-size: var(--partners-label-size);             /* Responsive font size */
   line-height: 1.2;                                 /* Tight line height */
   white-space: nowrap;                              /* Prevent text wrapping */
   text-align: left;                                 /* Align left */
@@ -359,7 +396,6 @@ body::before {
 
   /* Center align labels and organiser section on mobile */
   .partners-group { justify-items: center; }        /* Center grid items */
-  .partners-label { text-align: center; }           /* Center label text */
 
   /* Organiser section centering */
   .partners-group.organisers .logos-list{
@@ -369,30 +405,6 @@ body::before {
   .partners-group.organisers .logos-list img{
     margin-inline: auto;                            /* Center image */
     height: clamp(90px, 28vw, 140px);              /* Smaller logo on mobile */
-  }
-
-  /* Adjust typography variables for mobile */
-  :root{
-    --logo: clamp(24px, 8vw, 48px);                /* Smaller logo text */
-    --title: clamp(20px, 6.2vw, 28px);             /* Smaller title */
-    --subtitle: clamp(12px, 4vw, 18px);            /* Smaller subtitle */
-    --subtitle2: clamp(12px, 3.6vw, 18px);         /* Smaller subtitle2 */
-    --time-value: clamp(28px, 10vw, 44px);         /* Smaller countdown numbers */
-    --time-label: clamp(10px, 3.2vw, 14px);        /* Smaller countdown labels */
-    --details: clamp(12px, 3.5vw, 16px);           /* Smaller details */
-    --details-strong: clamp(14px, 3.8vw, 18px);    /* Smaller bold details */
-  }
-}
-
-/* Large desktop: increase font sizes */
-@media (min-width: 1200px){
-  :root{
-    --logo: clamp(48px, 5vw, 90px);                /* Larger logo */
-    --title: clamp(32px, 2.4vw, 48px);             /* Larger title */
-    --subtitle: clamp(16px, 1.4vw, 24px);          /* Larger subtitle */
-    --subtitle2: clamp(20px, 3.6vw, 28px);         /* Larger subtitle2 */
-    --time-value: clamp(50px, 4.6vw, 80px);        /* Larger countdown */
-    --time-label: clamp(12px, 1.1vw, 18px);        /* Larger labels */
   }
 }
 
@@ -528,7 +540,7 @@ body::before {
   margin: var(--space) auto 0; 
 }
 .lucky-title {
-  font-size: clamp(18px, 2.4vw, 30px);
+  font-size: var(--section-title);
   color: #ffd700;
   text-shadow: 2px 2px 4px rgba(0,0,0,.6);
   margin-bottom: 6px;
@@ -580,9 +592,10 @@ body::before {
 
 /* ===== Day Schedule ===== */
 .sched-title {
-  font-size: clamp(18px, 2.4vw, 30px);
+  font-size: var(--section-title);
   color: #ffd700; text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 6px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,.6); 
+  margin-bottom: calc(var(--space) * 0.9);
 }
 .sched-note{
   text-align: center; color: #fff; opacity: .9;
@@ -596,6 +609,7 @@ body::before {
   border: 2px solid rgba(212,175,55,.40);
   border-radius: 14px; overflow: hidden;
   box-shadow: 0 12px 34px rgba(0,0,0,.35);
+  margin-bottom: calc(var(--space) * 2);
 }
 
 
@@ -633,7 +647,7 @@ body::before {
 
 
 /* schedule stays wide */
-.day-schedule { width: min(92vw, 980px); margin: var(--space) auto 0; }
+.day-schedule { width: min(92vw, 980px); margin: calc(var(--space) * 2) auto 0; }
 .day-schedule .sched-wrap { width: 100%; max-width: none; }
 
 /* lucky draw gets a narrower container */
