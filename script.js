@@ -230,7 +230,6 @@ window.addEventListener("load", initSchedule);
   const modal = document.getElementById('luckyModal');
   if (!modal) return;
 
-  const btnEnter = document.getElementById('luckyEnterBtn');
   const btnClose = document.getElementById('luckyModalClose');
   const btnLearn = document.getElementById('luckyLearnBtn');
 
@@ -293,7 +292,6 @@ window.addEventListener("load", initSchedule);
   function onEsc(e){ if (e.key === 'Escape') closeModal(); }
 
   // Wire buttons
-  btnEnter?.addEventListener('click', closeModal);
   btnClose?.addEventListener('click', closeModal);
   btnLearn?.addEventListener('click', closeModal); // close and jump to #lucky-draw
 
@@ -306,40 +304,51 @@ window.addEventListener("load", initSchedule);
   }
 })();
 
-// ===== Quick Nav: smooth scroll + active link =====
-(function initQuickNav(){
-  const nav = document.getElementById('quick-nav');
-  if (!nav) return;
 
-  const links = nav.querySelectorAll('a[href^="#"]');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ---- Quick Nav (left rail) ----
+(function initJtmRail(){
+  const rail = document.getElementById('jtmRail');
+  const tab  = document.getElementById('jtmRailTab');
+  if (!rail || !tab) return;
 
-  // Smooth scrolling (with tiny top offset)
-  links.forEach(a => {
-    a.addEventListener('click', (e) => {
-      const sel = a.getAttribute('href');
-      const target = document.querySelector(sel);
-      if (!target) return;
-      e.preventDefault();
-      const y = target.getBoundingClientRect().top + window.pageYOffset - 12;
-      window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
-      // collapse on touch by dropping focus
-      nav.blur();
-    });
+  // open/close with hover is handled in CSS; we also toggle class for touch/click
+  tab.addEventListener('click', () => {
+    rail.classList.toggle('is-open');
+    const isOpen = rail.classList.contains('is-open');
+    tab.setAttribute('aria-expanded', String(isOpen));
   });
 
-  // Active state with IntersectionObserver
-  const anchorMap = new Map([...links].map(a => [a.getAttribute('href'), a]));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const a = anchorMap.get('#' + entry.target.id);
-      if (!a) return;
-      a.classList.toggle('is-active', entry.isIntersecting);
-    });
-  }, { threshold: 0.4, rootMargin: '0px 0px -10% 0px' });
+  // smooth scroll (with offset-safe behavior)
+  const links = rail.querySelectorAll('[data-jtm-scroll]');
+  links.forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const sel = a.dataset.jtmScroll || a.getAttribute('href');
+      const target = document.querySelector(sel);
+      if (!target) return;
 
-  ['countdown','schedule','lucky-draw'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) io.observe(el);
+      // close the rail on small screens after click
+      rail.classList.remove('is-open');
+      tab.setAttribute('aria-expanded', 'false');
+
+      // native smooth where supported; fallback to JS animate
+      try {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch {
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        const start = window.scrollY;
+        const dist = top - start;
+        const dur = 600;
+        let t0;
+        const ease = (t)=> t<.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+        const step = (ts)=>{
+          if(!t0) t0 = ts;
+          const p = Math.min(1, (ts - t0)/dur);
+          window.scrollTo(0, start + dist * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    });
   });
 })();

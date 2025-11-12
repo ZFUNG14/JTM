@@ -104,15 +104,7 @@ body::before {
 .logo-section { margin-bottom: var(--space); }
 
 /* ========= Typography ========= */
-/* Main logo text styling (if text is used instead of image) */
-.logo {
-  font-size: var(--logo);                           /* Responsive font size */
-  font-weight: bold;                                /* Bold text */
-  color: #fff;                                      /* White text */
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);    /* Shadow for depth and readability */
-  letter-spacing: var(--logo-spacing);             /* Spaced out letters */
-  margin-bottom: calc(var(--space) * 0.6);         /* Spacing below logo */
-}
+
 
 /* Logo subtitle styling */
 .logo-subtitle {
@@ -318,15 +310,6 @@ body::before {
   width: 100%;                                      /* Full width */
 }
 
-/* Grid positioning for supporter logos (specific placement on desktop) */
-.supporters .logos-list img:nth-child(1){ grid-row:1; grid-column:1; } /* EMA - row 1, column 1 */
-.supporters .logos-list img:nth-child(2){ grid-row:1; grid-column:2; } /* TM - row 1, column 2 */
-.supporters .logos-list img:nth-child(3){ grid-row:1; grid-column:1; } /* MH - row 1, column 1 */
-.supporters .logos-list img:nth-child(4){ grid-row:1; grid-column:3; } /* UEM - row 1, column 3 */
-.supporters .logos-list img:nth-child(5){ grid-row:2; grid-column:2; } /* MARA - row 2, column 2 */
-.supporters .logos-list img:nth-child(6){ grid-row:2; grid-column:3; } /* MASCA - row 2, column 3 (square) */
-.supporters .logos-list img:nth-child(7){ grid-row:2; grid-column:4; } /* AMBC - row 2, column 4 (square) */
-
 /* Default supporters logo sizing (rectangular logos) */
 .supporters .logos-list img{
   height: var(--supp-cell-h);                       /* Uniform height */
@@ -407,7 +390,7 @@ body::before {
     --subtitle2: clamp(12px, 3.6vw, 18px);         /* Smaller subtitle2 */
     --time-value: clamp(28px, 10vw, 44px);         /* Smaller countdown numbers */
     --time-label: clamp(10px, 3.2vw, 14px);        /* Smaller countdown labels */
-    --details: clamp(64px, 3.5vw, 72px);           /* Smaller details */
+    --details: clamp(12px, 3.5vw, 16px);           /* Smaller details */
     --details-strong: clamp(14px, 3.8vw, 18px);    /* Smaller bold details */
   }
 }
@@ -486,13 +469,6 @@ body::before {
   color: #ffd700;
 }
 .footer-social i { font-size: 18px; line-height: 1; }
-
-/* Stack nicely on small screens */
-@media (max-width: 640px) {
-  .footer-container { grid-template-columns: 1fr; gap: 10px; }
-  .footer-social { justify-content: center; }
-  .footer-left { text-align: center; }
-}
 
 /* Flip copyright & social icons on small screens */
 @media (max-width: 640px) {
@@ -614,7 +590,6 @@ body::before {
 .event-details { margin-bottom: var(--space); }
 
 /* ===== Day Schedule ===== */
-.day-schedule { margin-top: var(--space) auto; text-align: left; }
 .sched-title {
   font-size: clamp(18px, 2.4vw, 30px);
   color: #ffd700; text-align: center;
@@ -656,7 +631,6 @@ body::before {
   text-shadow: 1px 1px 2px rgba(0,0,0,.4);
 }
 .sched-item .what { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
-.sched-item .meta { display: block; opacity: .85; font-style: italic; }
 
 /* Smaller screens: tighten grid and font sizes a touch */
 @media (max-width: 900px){
@@ -872,145 +846,120 @@ html { scroll-behavior: smooth; }
 
 /* ---------- Side toggle (subtle “peek” on the left) ---------- */
 /* ===== Left Quick Nav (sleek, animated) ===== */
-:root{
-  --nav-width: clamp(160px, 24vw, 240px);
-  --nav-peek: 14px;                 /* visible sliver when collapsed */
-  --nav-gold: #ffd700;
-  --nav-border: rgba(212,175,55,.32);
-}
-
-.side-nav{
+/* ================= JTM Left Rail (side toggle) ================ */
+.jtm-rail{
   position: fixed;
-  top: 50%;
   left: 0;
-  z-index: 999;
-  width: var(--nav-width);
-  transform: translateX(calc(-100% + var(--nav-peek))) translateY(-50%);
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--nav-border);
-  border-left: none;
-  border-radius: 0 16px 16px 0;
-  box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
-  opacity: .62;
-  transition:
-    transform .36s cubic-bezier(.2,.6,.2,1),
-    opacity   .36s ease;
+  top: 40%;
+  transform: translateY(-40%);
+  z-index: 999;           /* above content, below modal */
+  pointer-events: auto;
 }
 
-/* smooth reveal on hover/focus */
-.side-nav:hover,
-.side-nav:focus-within{
-  transform: translateX(0) translateY(-50%);
+/* the menu panel */
+.jtm-rail__list{
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  width: 220px;
+
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+
+  /* collapsed state: hide off-screen, leave a tiny sliver */
+  transform: translateX(calc(-100% + 18px));
+  opacity: .65;
+
+  transition:
+    transform .32s cubic-bezier(.2,.6,.2,1),
+    opacity   .22s ease,
+    box-shadow .28s ease;
+}
+
+/* open on hover/focus or programmatic "is-open" */
+.jtm-rail:hover .jtm-rail__list,
+.jtm-rail:focus-within .jtm-rail__list,
+.jtm-rail.is-open .jtm-rail__list{
+  transform: translateX(0);
   opacity: 1;
 }
 
-/* inner layout */
-.side-nav__list{
-  list-style: none;
-  margin: 10px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.side-nav a{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 12px;
+/* nav links */
+.jtm-rail__list a{
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
   text-decoration: none;
-  color: var(--nav-gold);
-  font: 700 14px/1.2 "Georgia", serif;
-  border: 1px solid transparent;
-  background: transparent;
-  transition:
-    background .2s ease,
-    border-color .2s ease,
-    transform .2s ease,
-    opacity .2s ease;
+  color: #f7f0d9;                     /* soft ivory */
+  font-family: "Georgia", serif;
+  border-radius: 10px;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
-.side-nav a .ico{ width: 18px; text-align: center; opacity: .9; }
-
-.side-nav a:hover,
-.side-nav a:focus-visible{
-  background: rgba(255,255,255,.08);
-  border-color: rgba(212,175,55,.38);
-  transform: translateX(2px);
-  outline: none;
+.jtm-rail__list a i{ color: #ffd700; min-width: 18px; text-align: center; }
+.jtm-rail__list a:hover{
+  color: #ffd700;
+  background: rgba(255,255,255,.06);
+  transform: translateX(1px);
 }
 
-/* active link while that section is in view */
-.side-nav a.is-active{
-  background: rgba(255,215,0,.10);
-  border-color: rgba(212,175,55,.42);
-  box-shadow: inset 0 0 0 1px rgba(212,175,55,.18);
-}
-
-/* gentle stagger when opening */
-@keyframes jtmFadeSlide {
-  from { opacity: 0; transform: translateX(-6px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-.side-nav:hover .side-nav__item,
-.side-nav:focus-within .side-nav__item{ animation: jtmFadeSlide .32s ease both; }
-.side-nav:hover .side-nav__item:nth-child(1),
-.side-nav:focus-within .side-nav__item:nth-child(1){ animation-delay: .02s; }
-.side-nav:hover .side-nav__item:nth-child(2),
-.side-nav:focus-within .side-nav__item:nth-child(2){ animation-delay: .06s; }
-.side-nav:hover .side-nav__item:nth-child(3),
-.side-nav:focus-within .side-nav__item:nth-child(3){ animation-delay: .10s; }
-
-/* little “handle” that hints there's a hidden nav */
-.side-nav__handle{
+/* little side tab (arrow indicator) that always peeks out */
+.jtm-rail__tab{
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translate(-55%, -50%);
-  width: 26px; height: 60px;
+  left: 0; top: 50%;
+  transform: translate(-50%, -50%);   /* half outside viewport */
+  width: 16px; height: 72px;
   border-radius: 0 10px 10px 0;
-  background: rgba(255,255,255,.05);
-  border: 1px solid var(--nav-border);
-  border-left: none;
-  box-shadow: 0 8px 18px rgba(0,0,0,.35);
-  pointer-events: none;               /* purely decorative */
+  border: 1px solid rgba(212,175,55,.28);
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
   display: grid; place-items: center;
-}
-.side-nav__handle::before{
-  content: "❯";                       /* arrow pointing right */
-  transform: translateX(-1px);
-  font: 700 14px/1 "Georgia", serif;
-  color: var(--nav-gold);
-  opacity: .8;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, transform .32s cubic-bezier(.2,.6,.2,1);
 }
 
-/* subtle nudge to draw attention just occasionally */
-@keyframes jtmNudge {
-  0%,80%,100% { transform: translate(-55%, -50%); }
-  86%         { transform: translate(-49%, -50%); }
-  92%         { transform: translate(-55%, -50%); }
-}
-.side-nav__handle{ animation: jtmNudge 4s ease-in-out 6s infinite; }
-.side-nav:hover .side-nav__handle,
-.side-nav:focus-within .side-nav__handle{ animation: none; opacity: .5; }
-
-/* targets get a small scroll margin so smooth scroll stops nicely */
-#countdown, #schedule, #lucky-draw { scroll-margin-top: 16px; }
-
-/* mobile tweaks — keep it left, just slimmer & a bit lower */
-@media (max-width: 560px){
-  :root{ --nav-width: min(74vw, 240px); --nav-peek: 10px; }
-  .side-nav{ left: 4px; }
-  .side-nav__handle{ height: 48px; width: 22px; }
-  .side-nav a{ font-size: 13px; padding: 8px 9px; }
+/* gold chevron ▸ */
+.jtm-rail__chev{
+  width: 7px; height: 7px;
+  border-right: 2px solid #ffd700;
+  border-top:  2px solid #ffd700;
+  transform: rotate(45deg);    /* points right */
+  transition: transform .32s cubic-bezier(.2,.6,.2,1), opacity .2s ease;
+  opacity: .9;
 }
 
-/* motion respect */
-@media (prefers-reduced-motion: reduce){
-  .side-nav,
-  .side-nav__handle,
-  .side-nav__item{ transition: none !important; animation: none !important; }
+/* gentle "nudge" to hint discoverability when collapsed */
+@keyframes jtmChevronNudge{
+  0%,70%,100% { transform: translateX(0)   rotate(45deg); }
+  80%         { transform: translateX(2px) rotate(45deg); }
+  90%         { transform: translateX(0)   rotate(45deg); }
 }
+.jtm-rail:not(:hover):not(.is-open) .jtm-rail__chev{
+  animation: jtmChevronNudge 4.8s ease-in-out infinite;
+}
+
+/* rotate chevron when the panel opens */
+.jtm-rail:hover .jtm-rail__chev,
+.jtm-rail:focus-within .jtm-rail__chev,
+.jtm-rail.is-open .jtm-rail__chev{
+  transform: rotate(-135deg); /* points left */
+}
+
+/* Responsive polish */
+@media (max-width: 800px){
+  .jtm-rail{ top: 38%; }
+  .jtm-rail__list{ width: 200px; }
+  .jtm-rail__tab{ height: 64px; }
+}
+@media (max-width: 520px){
+  .jtm-rail{ top: auto; bottom: 20px; transform: none; }
+  .jtm-rail__list{
+    width: min(86vw, 280px);
+    transform: translateX(calc(-100% + 18px)); /* still peeks nicely */
+  }
+  .jtm-rail__tab{ height: 56px; }
+  .jtm-rail__list a{ padding: 9px 10px; }
+}
+
 
