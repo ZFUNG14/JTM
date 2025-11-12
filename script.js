@@ -3,8 +3,6 @@ window.addEventListener("load", () => {
   AOS.init({
     duration: 800,
     once: false,
-    disable: () =>
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   });
   AOS.refresh();
 });
@@ -351,4 +349,56 @@ window.addEventListener("load", initSchedule);
       }
     });
   });
+
+  (function initJtmRail(){
+  const rail = document.getElementById('jtmRail');
+  const tab  = document.getElementById('jtmRailTab');
+  if (!rail || !tab) return;
+
+  // open/close with the side tab
+  tab.addEventListener('click', () => {
+    rail.classList.toggle('is-open');
+    const isOpen = rail.classList.contains('is-open');
+    tab.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // NEW: collapse button inside the panel
+  const btnClose = document.getElementById('jtmRailClose');
+  btnClose?.addEventListener('click', () => {
+    rail.classList.remove('is-open');
+    tab.setAttribute('aria-expanded', 'false');
+    tab.focus({ preventScroll: true });
+  });
+
+  // NEW: Esc key also closes when the rail has focus
+  rail.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      rail.classList.remove('is-open');
+      tab.setAttribute('aria-expanded', 'false');
+      tab.focus({ preventScroll: true });
+    }
+  });
+
+  // smooth scroll for links (unchanged)
+  const links = rail.querySelectorAll('[data-jtm-scroll]');
+  links.forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const sel = a.dataset.jtmScroll || a.getAttribute('href');
+      const target = document.querySelector(sel);
+      if (!target) return;
+
+      rail.classList.remove('is-open');           // close after tap
+      tab.setAttribute('aria-expanded', 'false');
+
+      try {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch {
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+})();
+
 })();

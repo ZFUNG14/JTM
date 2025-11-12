@@ -18,7 +18,7 @@
   --logo-spacing: clamp(2px, 0.8vw, 10px);          /* Letter spacing for logo */
   --subtitle: clamp(14px, 2vw, 24px);               /* Subtitle text size */
   --title: clamp(20px, 3vw, 36px);                 /* Event title size */
-  --subtitle2: clamp(12px, 1.6vw, 18px);            /* Secondary subtitle */
+  --subtitle2: clamp(12px, 3.6vw, 18px);            /* Secondary subtitle */
   --time-value: clamp(34px, 6vw, 72px);             /* Countdown numbers */
   --time-label: clamp(12px, 1.6vw, 18px);           /* Countdown labels (Days, Hours, etc) */
   --details: clamp(12px, 1.8vw, 18px);              /* Event details text */
@@ -187,17 +187,6 @@ body::before {
 .event-details strong {
   color: #ffd700;                                   /* Gold color */
   font-size: var(--details-strong);                /* Slightly larger font */
-}
-
-/* ========= Motion Pref (accessibility) ========= */
-/* Respects user's preference for reduced motion (accessibility feature) */
-@media (prefers-reduced-motion: reduce) {
-  * { 
-    animation-duration: 0.01ms !important;          /* Nearly instant animations */
-    animation-iteration-count: 1 !important;        /* Only play once */
-    transition: none !important;                    /* Disable transitions */
-    scroll-behavior: auto !important;               /* Instant scrolling */
-  }
 }
 
 /* ========= Responsive Edges ========= */
@@ -401,7 +390,7 @@ body::before {
     --logo: clamp(48px, 5vw, 90px);                /* Larger logo */
     --title: clamp(32px, 2.4vw, 48px);             /* Larger title */
     --subtitle: clamp(16px, 1.4vw, 24px);          /* Larger subtitle */
-    --subtitle2: clamp(32px, 1.2vw, 32px);         /* Larger subtitle2 */
+    --subtitle2: clamp(20px, 3.6vw, 28px);         /* Larger subtitle2 */
     --time-value: clamp(50px, 4.6vw, 80px);        /* Larger countdown */
     --time-label: clamp(12px, 1.1vw, 18px);        /* Larger labels */
   }
@@ -554,9 +543,9 @@ body::before {
 /* Frame wrapper styled like the main card */
 .lucky-frame-wrap {
   width: 100%;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(6px);
-  border: 2px solid rgba(212,175,55,0.30);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(1px);
+  border: 2px solid rgba(212,175,55,0.40);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 12px 34px rgba(0,0,0,.35);
@@ -603,8 +592,8 @@ body::before {
 
 .sched-wrap {
   position: relative;
-  background: rgba(255,255,255,.06);
-  border: 2px solid rgba(212,175,55,.28);
+  background: rgba(255,255,255,.12);
+  border: 2px solid rgba(212,175,55,.40);
   border-radius: 14px; overflow: hidden;
   box-shadow: 0 12px 34px rgba(0,0,0,.35);
 }
@@ -961,6 +950,35 @@ html { scroll-behavior: smooth; }
   .jtm-rail__tab{ height: 56px; }
   .jtm-rail__list a{ padding: 9px 10px; }
 }
+
+/* make room at the top for the close button */
+.jtm-rail__list { 
+  position: relative; 
+  padding: 34px 10px 10px; /* extra space on the left for the button */
+}
+/* absolute corner placement */
+.jtm-rail__close-li {
+  position: absolute;
+  top: 6px;
+  left: 6px;     /* was right: 6px */
+  right: auto;   /* reset */
+  list-style: none;
+}.jtm-rail__close {
+  display: none;                /* default: hidden on hover/desktop */
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.28);
+  background: rgba(255,255,255,.06);
+  color: #ffd700;
+  font-weight: 700; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* show on touch devices (no hover, coarse pointer) */
+@media (hover: none) and (pointer: coarse) {
+  .jtm-rail__close { display: inline-flex; }
+}
+
 
 
 
