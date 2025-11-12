@@ -595,7 +595,7 @@ body::before {
   color: #ffd700; text-align: center;
   text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 6px;
 }
-.sched-note, .sched-footnote {
+.sched-note{
   text-align: center; color: #fff; opacity: .9;
   font-size: clamp(12px, 1.6vw, 16px);
   margin-bottom: calc(var(--space) * .8);
@@ -671,7 +671,7 @@ body::before {
 .jtm-modal__backdrop{
   position: absolute; inset: 0;
   background: rgba(20, 8, 6, .55);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(14px);
 }
 
 /* the glass card */
@@ -961,5 +961,6 @@ html { scroll-behavior: smooth; }
   .jtm-rail__tab{ height: 56px; }
   .jtm-rail__list a{ padding: 9px 10px; }
 }
+
 
 
