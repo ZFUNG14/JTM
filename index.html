@@ -31,7 +31,7 @@
 
       <div class="jtm-modal__card" role="document">
         <button
-          class="jtm-modhttp://127.0.0.1:5500/index.htmlal__close"
+          class="jtm-modal__close"
           id="luckyModalClose"
           aria-label="Close announcement"
         >
@@ -56,6 +56,10 @@
           <figure class="jtm-prize">
             <img src="media/prizes/watch.jpeg" alt="Apple Watch Series 11" />
             <figcaption>Apple Watch Series 11</figcaption>
+            <figure class="jtm-prize">
+              <img src="media/prizes/prize3.jpeg" alt="Stay at The Quay" />
+              <figcaption>Stay at The Quay</figcaption>
+            </figure>
           </figure>
         </div>
 
@@ -427,24 +431,37 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <!-- Quick Nav (Left toggle) -->
-    <nav id="quick-nav" class="side-nav" aria-label="Quick navigation">
-      <div class="side-nav__handle" aria-hidden="true"></div>
-      <ul class="side-nav__list">
-        <li class="side-nav__item">
-          <a href="#countdown"
-            ><i class="ico fa-regular fa-clock"></i><span>Countdown</span></a
-          >
+    <!-- Quick Nav (left rail) -->
+    <nav class="jtm-rail" id="jtmRail" aria-label="Quick navigation">
+      <!-- little tab/arrow that peeks out when collapsed -->
+      <button
+        class="jtm-rail__tab"
+        id="jtmRailTab"
+        aria-label="Open quick navigation"
+        aria-controls="jtmRailList"
+        aria-expanded="false"
+      >
+        <span class="jtm-rail__chev" aria-hidden="true"></span>
+      </button>
+
+      <ul class="jtm-rail__list" id="jtmRailList" role="menu">
+        <li role="none">
+          <a role="menuitem" href="#countdown" data-jtm-scroll="#countdown">
+            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+            <span>Countdown</span>
+          </a>
         </li>
-        <li class="side-nav__item">
-          <a href="#schedule"
-            ><i class="ico fa-solid fa-bars-staggered"></i
-            ><span>Schedule</span></a
-          >
+        <li role="none">
+          <a role="menuitem" href="#schedule" data-jtm-scroll="#schedule">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            <span>Schedule</span>
+          </a>
         </li>
-        <li class="side-nav__item">
-          <a href="#lucky-draw"
-            ><i class="ico fa-solid fa-ticket"></i><span>Lucky Draw</span></a
-          >
+        <li role="none">
+          <a role="menuitem" href="#lucky-draw" data-jtm-scroll="#lucky-draw">
+            <i class="fa-solid fa-ticket" aria-hidden="true"></i>
+            <span>Lucky Draw</span>
+          </a>
         </li>
       </ul>
     </nav>
