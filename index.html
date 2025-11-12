@@ -14,106 +14,165 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
+    <!-- Own JS -->
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <!-- Main container - holds all page content with glassmorphism card effect -->
-    <div class="container" data-aos="fade-up">
-      <!-- Logo section at the top of the page -->
-      <div class="logo-section">
-        <div class="logo-subtitle">
-          <!-- Journey to Malaysia logo image -->
-          <img
-            class="jtm-logo"
-            src="media/logos/JTMLogo.png"
-            alt="Journey to Malaysia"
-          />
-        </div>
-      </div>
+    <!-- Lucky Draw Modal -->
+    <div
+      class="jtm-modal"
+      id="luckyModal"
+      aria-hidden="true"
+      role="dialog"
+      aria-labelledby="luckyModalTitle"
+      aria-describedby="luckyModalDesc"
+    >
+      <div class="jtm-modal__backdrop"></div>
 
-      <!-- Main event title text -->
-      <div class="event-title">A Vibrant Celebration of</div>
+      <div class="jtm-modal__card" role="document">
+        <button
+          class="jtm-modhttp://127.0.0.1:5500/index.htmlal__close"
+          id="luckyModalClose"
+          aria-label="Close announcement"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
 
-      <!-- Event subtitle with yellow/gold styling -->
-      <div class="event-subtitle">Malaysian Culture and Tourism</div>
+        <h2 class="jtm-modal__title" id="luckyModalTitle">Welcome!</h2>
+        <p class="jtm-modal__desc" id="luckyModalDesc">
+          Join the Journey to Malaysia Lucky Draw! Submit your entry and stand a
+          chance to win the prizes below.
+        </p>
 
-      <!-- Countdown timer container with 4 time units -->
-      <div class="countdown">
-        <!-- Days counter -->
-        <div class="time-unit">
-          <span class="time-value" id="days">00</span>
-          <span class="time-label">Days</span>
-        </div>
-
-        <!-- Hours counter -->
-        <div class="time-unit">
-          <span class="time-value" id="hours">00</span>
-          <span class="time-label">Hours</span>
-        </div>
-
-        <!-- Minutes counter -->
-        <div class="time-unit">
-          <span class="time-value" id="minutes">00</span>
-          <span class="time-label">Minutes</span>
-        </div>
-
-        <!-- Seconds counter -->
-        <div class="time-unit">
-          <span class="time-value" id="seconds">00</span>
-          <span class="time-label">Seconds</span>
-        </div>
-      </div>
-
-      <!-- Event details: date, location, and time -->
-      <div class="event-details">
-        <strong>15 November 2025</strong><br />
-        Forrest Place, Perth CBD<br />
-        9:00am - 6:00pm
-      </div>
-
-      <!-- Decorative horizontal divider line with gradient -->
-      <hr class="divider" />
-
-      <!-- Partners section containing organisers and supporters -->
-      <section class="partners">
-        <!-- Organiser section - single logo -->
-        <div class="partners-group organisers">
-          <span class="partners-label">Organised by:</span>
-          <div class="logos-list">
-            <!-- Consulate General of Malaysia logo -->
-            <img src="media/logos/CG.png" alt="Consulate General of Malaysia" />
-          </div>
-        </div>
-
-        <!-- Supporters section - multiple logos in grid layout -->
-        <div class="partners-group supporters">
-          <span class="partners-label">Supported by:</span>
-          <div class="logos-list">
-            <!-- Education Malaysia Australia logo -->
-            <img src="media/logos/EMA.png" alt="Education Malaysia Australia" />
-
-            <!-- Tourism Malaysia logo -->
-            <img src="media/logos/TM.png" alt="Tourism Malaysia" />
-
-            <!-- Malaysia Airlines logo -->
-            <img src="media/logos/MH.png" alt="Malaysia Airlines" />
-
-            <!-- UEM logo -->
-            <img src="media/logos/UEM.png" alt="UEM" />
-
-            <!-- Universiti Teknologi MARA logo -->
-            <img src="media/logos/MARA.png" alt="Universiti Teknologi MARA" />
-
-            <!-- MASCA logo (square format) -->
-            <img src="media/logos/MASCA.png" alt="MASCA" />
-
-            <!-- Australian Malaysian Business Council logo (square format) -->
+        <div class="jtm-modal__prizes">
+          <!-- Replace the two src paths with your real images -->
+          <figure class="jtm-prize">
             <img
-              src="media/logos/AMBC.png"
-              alt="Australian Malaysian Business Council"
+              src="media/prizes/prize1.jpg"
+              alt="Malaysia Airlines Flight Ticket"
+            />
+            <figcaption>Malaysia Airlines Flight Ticket</figcaption>
+          </figure>
+          <figure class="jtm-prize">
+            <img src="media/prizes/watch.jpeg" alt="Apple Watch Series 11" />
+            <figcaption>Apple Watch Series 11</figcaption>
+          </figure>
+        </div>
+
+        <div class="jtm-modal__actions">
+          <a class="btn btn-secondary" href="#lucky-draw" id="luckyLearnBtn"
+            >Learn more</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="countdown" id="countdown">
+      <!-- Main container - holds all page content with glassmorphism card effect -->
+      <div class="container" data-aos="fade-up">
+        <!-- Logo section at the top of the page -->
+        <div class="logo-section">
+          <div class="logo-subtitle">
+            <!-- Journey to Malaysia logo image -->
+            <img
+              class="jtm-logo"
+              src="media/logos/JTMLogo.png"
+              alt="Journey to Malaysia"
             />
           </div>
         </div>
-      </section>
+
+        <!-- Main event title text -->
+        <div class="event-title">A Vibrant Celebration of</div>
+
+        <!-- Event subtitle with yellow/gold styling -->
+        <div class="event-subtitle">Malaysian Culture and Tourism</div>
+
+        <!-- Countdown timer container with 4 time units -->
+        <div class="countdown">
+          <!-- Days counter -->
+          <div class="time-unit">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Days</span>
+          </div>
+
+          <!-- Hours counter -->
+          <div class="time-unit">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Hours</span>
+          </div>
+
+          <!-- Minutes counter -->
+          <div class="time-unit">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Minutes</span>
+          </div>
+
+          <!-- Seconds counter -->
+          <div class="time-unit">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+
+        <!-- Event details: date, location, and time -->
+        <div class="event-details">
+          <strong>15 November 2025</strong><br />
+          Forrest Place, Perth CBD<br />
+          9:00am - 6:00pm
+        </div>
+
+        <!-- Decorative horizontal divider line with gradient -->
+        <hr class="divider" />
+
+        <!-- Partners section containing organisers and supporters -->
+        <section class="partners">
+          <!-- Organiser section - single logo -->
+          <div class="partners-group organisers">
+            <span class="partners-label">Organised by:</span>
+            <div class="logos-list">
+              <!-- Consulate General of Malaysia logo -->
+              <img
+                src="media/logos/CG.png"
+                alt="Consulate General of Malaysia"
+              />
+            </div>
+          </div>
+
+          <!-- Supporters section - multiple logos in grid layout -->
+          <div class="partners-group supporters">
+            <span class="partners-label">Supported by:</span>
+            <div class="logos-list">
+              <!-- Education Malaysia Australia logo -->
+              <img
+                src="media/logos/EMA.png"
+                alt="Education Malaysia Australia"
+              />
+
+              <!-- Tourism Malaysia logo -->
+              <img src="media/logos/TM.png" alt="Tourism Malaysia" />
+
+              <!-- Malaysia Airlines logo -->
+              <img src="media/logos/MH.png" alt="Malaysia Airlines" />
+
+              <!-- UEM logo -->
+              <img src="media/logos/UEM.png" alt="UEM" />
+
+              <!-- Universiti Teknologi MARA logo -->
+              <img src="media/logos/MARA.png" alt="Universiti Teknologi MARA" />
+
+              <!-- MASCA logo (square format) -->
+              <img src="media/logos/MASCA.png" alt="MASCA" />
+
+              <!-- Australian Malaysian Business Council logo (square format) -->
+              <img
+                src="media/logos/AMBC.png"
+                alt="Australian Malaysian Business Council"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <!-- ===== Day Schedule (Highlights) ===== -->
@@ -127,18 +186,15 @@
       <!-- The wrapper knows the day’s start/end to scale the timeline -->
       <div
         class="sched-wrap"
-        data-start="2025-11-15T09:00:00+08:00"
-        data-end="2025-11-15T18:00:00+08:00"
+        data-start="2025-11-12T09:00:00+08:00"
+        data-end="2025-11-12T18:00:00+08:00"
       >
-        <!-- Notion-style red “now” line -->
-        <div class="now-line" aria-hidden="true"><span class="dot"></span></div>
-
         <!-- Each item has precise start/end so JS can size & highlight -->
         <ul class="sched-list">
           <li
             class="sched-item"
-            data-start="2025-11-15T09:00:00+08:00"
-            data-end="2025-11-15T10:00:00+08:00"
+            data-start="2025-11-12T09:00:00+08:00"
+            data-end="2025-11-12T10:00:00+08:00"
           >
             <time>9:00–10:00</time>
             <div class="what">
@@ -148,8 +204,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T10:00:00+08:00"
-            data-end="2025-11-15T11:00:00+08:00"
+            data-start="2025-11-12T10:00:00+08:00"
+            data-end="2025-11-12T11:00:00+08:00"
           >
             <time>10:00–11:00</time>
             <div class="what">
@@ -159,8 +215,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T12:15:00+08:00"
-            data-end="2025-11-15T12:30:00+08:00"
+            data-start="2025-11-12T12:15:00+08:00"
+            data-end="2025-11-12T12:30:00+08:00"
           >
             <time>12:15–12:30</time>
             <div class="what"><strong>Lion Dance</strong></div>
@@ -168,8 +224,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T12:30:00+08:00"
-            data-end="2025-11-15T12:40:00+08:00"
+            data-start="2025-11-12T12:30:00+08:00"
+            data-end="2025-11-12T12:40:00+08:00"
           >
             <time>12:30–12:40</time>
             <div class="what">
@@ -179,8 +235,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T13:00:00+08:00"
-            data-end="2025-11-15T13:10:00+08:00"
+            data-start="2025-11-12T13:00:00+08:00"
+            data-end="2025-11-12T13:10:00+08:00"
           >
             <time>1:00–1:10</time>
             <div class="what"><strong>UiTM Performance</strong></div>
@@ -188,8 +244,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T13:10:00+08:00"
-            data-end="2025-11-15T13:25:00+08:00"
+            data-start="2025-11-12T13:10:00+08:00"
+            data-end="2025-11-12T13:25:00+08:00"
           >
             <time>1:10–1:25</time>
             <div class="what"><strong>SISWA</strong> — live music & dance</div>
@@ -197,8 +253,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T14:00:00+08:00"
-            data-end="2025-11-15T14:06:00+08:00"
+            data-start="2025-11-12T14:00:00+08:00"
+            data-end="2025-11-12T14:06:00+08:00"
           >
             <time>2:00–2:06</time>
             <div class="what"><strong>Peranakan Dance</strong></div>
@@ -206,8 +262,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T14:06:00+08:00"
-            data-end="2025-11-15T14:16:00+08:00"
+            data-start="2025-11-12T14:06:00+08:00"
+            data-end="2025-11-12T14:16:00+08:00"
           >
             <time>2:06–2:16</time>
             <div class="what">
@@ -217,8 +273,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T14:30:00+08:00"
-            data-end="2025-11-15T14:40:00+08:00"
+            data-start="2025-11-12T14:30:00+08:00"
+            data-end="2025-11-12T14:40:00+08:00"
           >
             <time>2:30–2:40</time>
             <div class="what"><strong>Student Duet</strong> performance</div>
@@ -226,8 +282,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T15:10:00+08:00"
-            data-end="2025-11-15T15:24:00+08:00"
+            data-start="2025-11-12T15:10:00+08:00"
+            data-end="2025-11-12T15:24:00+08:00"
           >
             <time>3:10–3:24</time>
             <div class="what"><strong>Malaysian Fashion Show</strong></div>
@@ -235,19 +291,19 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T15:24:00+08:00"
-            data-end="2025-11-15T15:38:00+08:00"
+            data-start="2025-11-12T15:24:00+08:00"
+            data-end="2025-11-12T15:38:00+08:00"
           >
             <time>3:24–3:38</time>
             <div class="what">
-              <strong>Surprise Flashmob</strong>
+              <strong>Flashmob</strong>
             </div>
           </li>
 
           <li
             class="sched-item"
-            data-start="2025-11-15T16:00:00+08:00"
-            data-end="2025-11-15T16:15:00+08:00"
+            data-start="2025-11-12T16:00:00+08:00"
+            data-end="2025-11-12T16:15:00+08:00"
           >
             <time>4:00–4:15</time>
             <div class="what">
@@ -257,8 +313,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T16:30:00+08:00"
-            data-end="2025-11-15T16:45:00+08:00"
+            data-start="2025-11-12T16:30:00+08:00"
+            data-end="2025-11-12T16:45:00+08:00"
           >
             <time>4:30–4:45</time>
             <div class="what"><strong>UiTM Performance</strong></div>
@@ -266,8 +322,8 @@
 
           <li
             class="sched-item"
-            data-start="2025-11-15T17:45:00+08:00"
-            data-end="2025-11-15T18:00:00+08:00"
+            data-start="2025-11-12T17:45:00+08:00"
+            data-end="2025-11-12T18:00:00+08:00"
           >
             <time>5:45–6:00</time>
             <div class="what"><strong>Closing Note</strong> & end of event</div>
@@ -288,9 +344,6 @@
       aria-labelledby="lucky-title"
     >
       <h2 class="lucky-title" id="lucky-title">Lucky Draw Entry</h2>
-      <p class="lucky-note">
-        Enter your details below to join the Journey to Malaysia lucky draw.
-      </p>
 
       <div class="lucky-frame-wrap">
         <iframe
@@ -373,174 +426,27 @@
     <!-- AOS (Animate On Scroll) Library for scroll animations -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- JavaScript for countdown timer functionality -->
-    <script>
-      window.addEventListener("load", () => {
-        AOS.init({
-          duration: 800,
-          once: false,
-          // Respect reduced motion users (don’t animate in that case)
-          disable: () =>
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-        });
-        AOS.refresh(); // recalc after images/fonts finish
-      });
-      // Set the target event date and time (November 15, 2025 at 9:00 AM)
-      const eventDate = new Date("November 15, 2025 09:00:00").getTime();
-
-      // Function to calculate and update the countdown display
-      function updateCountdown() {
-        // Get current date/time in milliseconds
-        const now = new Date().getTime();
-
-        // Calculate the time difference between now and event date
-        const distance = eventDate - now;
-
-        // Calculate days remaining
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-        // Calculate hours remaining (remainder after removing full days)
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-
-        // Calculate minutes remaining (remainder after removing full hours)
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-        // Calculate seconds remaining (remainder after removing full minutes)
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Update the days display with leading zero if needed
-        document.getElementById("days").textContent = String(days).padStart(
-          2,
-          "0"
-        );
-
-        // Update the hours display with leading zero if needed
-        document.getElementById("hours").textContent = String(hours).padStart(
-          2,
-          "0"
-        );
-
-        // Update the minutes display with leading zero if needed
-        document.getElementById("minutes").textContent = String(
-          minutes
-        ).padStart(2, "0");
-
-        // Update the seconds display with leading zero if needed
-        document.getElementById("seconds").textContent = String(
-          seconds
-        ).padStart(2, "0");
-
-        // Check if the countdown has reached zero (event has started)
-        if (distance < 0) {
-          // Replace countdown with "Event Has Started" message
-          document.querySelector(".countdown").innerHTML =
-            '<h1 style="color:#FFD700;font-size:48px;">The Event Has Started!</h1>';
-        }
-      }
-
-      // Run the countdown function immediately on page load
-      updateCountdown();
-
-      // Update the countdown every 1000 milliseconds (1 second)
-      setInterval(updateCountdown, 1000);
-
-      // === Schedule: scale-by-time layout with anti-overlap spacing ===
-      function initSchedule() {
-        const wrap = document.querySelector(".sched-wrap");
-        if (!wrap) return;
-
-        // Responsive scaling: taller on smaller screens
-        const vw = Math.max(
-          document.documentElement.clientWidth,
-          window.innerWidth || 0
-        );
-        const PX_PER_MIN = vw < 520 ? 2.1 : vw < 900 ? 1.6 : 1.3; // pixels per minute
-        const MIN_BLOCK = vw < 520 ? 56 : 44; // minimum visible height for any item
-        const MIN_GAP = vw < 520 ? 12 : 10; // space between items
-
-        const dayStart = new Date(wrap.dataset.start);
-        const dayEnd = new Date(wrap.dataset.end);
-        const totalMin = Math.max(1, (dayEnd - dayStart) / 60000);
-
-        // initial height by time scale; we may grow it if we push items down
-        let wrapH = totalMin * PX_PER_MIN + 32;
-
-        const items = [...wrap.querySelectorAll(".sched-item")].sort(
-          (a, b) => new Date(a.dataset.start) - new Date(b.dataset.start)
-        );
-
-        let lastBottom = -Infinity;
-        const rows = [];
-
-        items.forEach((el) => {
-          const s = new Date(el.dataset.start);
-          const e = new Date(el.dataset.end);
-          const fromStartMin = (s - dayStart) / 60000;
-          const durMin = Math.max(6, (e - s) / 60000);
-
-          // target top by exact time, then enforce minimum separation
-          let top = fromStartMin * PX_PER_MIN + 8;
-          let height = Math.max(durMin * PX_PER_MIN - 4, MIN_BLOCK);
-
-          // push down if it would collide with the previous block
-          if (top < lastBottom + MIN_GAP) top = lastBottom + MIN_GAP;
-
-          el.style.top = top + "px";
-          el.style.height = height + "px";
-
-          lastBottom = top + height;
-          rows.push({ el, s, e });
-          wrapH = Math.max(wrapH, lastBottom + 16);
-        });
-
-        // grow the wrapper if needed
-        wrap.style.height = wrapH + "px";
-
-        const nowLine = wrap.querySelector(".now-line");
-
-        function perthNow() {
-          try {
-            return new Date(
-              new Date().toLocaleString("en-US", {
-                timeZone: "Australia/Perth",
-              })
-            );
-          } catch {
-            return new Date();
-          }
-        }
-
-        function tick() {
-          const now = perthNow();
-          const sameDay =
-            now.toISOString().slice(0, 10) ===
-            dayStart.toISOString().slice(0, 10);
-
-          if (!sameDay) {
-            nowLine.style.display = "none";
-          } else {
-            const mins = Math.min(
-              totalMin,
-              Math.max(0, (now - dayStart) / 60000)
-            );
-            nowLine.style.display = "block";
-            nowLine.style.top = mins * PX_PER_MIN + 8 + "px";
-          }
-
-          rows.forEach((r) => {
-            if (now >= r.s && now < r.e) r.el.classList.add("is-current");
-            else r.el.classList.remove("is-current");
-          });
-        }
-
-        tick();
-        setInterval(tick, 30000);
-      }
-
-      // Run after your AOS init
-      window.addEventListener("load", initSchedule);
-    </script>
+    <!-- Quick Nav (Left toggle) -->
+    <nav id="quick-nav" class="side-nav" aria-label="Quick navigation">
+      <div class="side-nav__handle" aria-hidden="true"></div>
+      <ul class="side-nav__list">
+        <li class="side-nav__item">
+          <a href="#countdown"
+            ><i class="ico fa-regular fa-clock"></i><span>Countdown</span></a
+          >
+        </li>
+        <li class="side-nav__item">
+          <a href="#schedule"
+            ><i class="ico fa-solid fa-bars-staggered"></i
+            ><span>Schedule</span></a
+          >
+        </li>
+        <li class="side-nav__item">
+          <a href="#lucky-draw"
+            ><i class="ico fa-solid fa-ticket"></i><span>Lucky Draw</span></a
+          >
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>

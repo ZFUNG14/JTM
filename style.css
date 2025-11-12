@@ -32,24 +32,34 @@
   --supp-cell-h: clamp(56px, 5.2vw, 90px);          /* Uniform height for supporter logos */
   --supp-wide: clamp(200px, 22vw, 320px);           /* Width for rectangular logos */
   --supp-square: var(--supp-cell-h);                /* Square logos use same as height */
+
+    --form-max-width: 720px;   /* page width for the Lucky Draw card */
+  --form-embed-h: 680px;     /* iframe height on desktop (tweak 600–780) */
+  --form-embed-h-sm: 760px;  /* iframe height on small screens */
 }
 
 /* ========= Page ========= */
 /* Body styling - creates the main background and centers content */
-body {
-  font-family: "Georgia", serif;                     /* Elegant serif font */
-  background: #7b2f21 url("media/background.png") center/cover no-repeat fixed;  /* Red-brown bg with texture */
-  min-height: 100dvh;                                /* Full viewport height (dynamic for mobile) */
-  display: flex;      
-  flex-direction: column;     /* ← stack children top-to-bottom */                               /* Flexbox for centering */
-  justify-content: flex-start;                           /* Center horizontally */
-  align-items: center;                               /* Center vertically */
-  overflow: auto;                                    /* Allow scrolling if needed */
-  position: relative;                                /* For absolute positioning of overlay */
+body{
+  font-family:"Georgia", serif;
+
+  /* keep the batik always visible (no zoom) */
+  background-color:#7b2f21;
+  background-image:url("media/background.png");
+  background-repeat:repeat;                   /* tile instead of cover */
+  background-size:clamp(600px, 45vw, 900px);  /* responsive tile size */
+  background-position:top center;
+  background-attachment:fixed;
+
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  justify-content:flex-start; align-items:center;
+  overflow:auto; position:relative;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
-           env(safe-area-inset-bottom) env(safe-area-inset-left);  /* Safe area padding for notched devices */
-  gap: var(--space);          /* space between container and QR */
-  }
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  gap:var(--space);
+}
+
 
 /* Textured background overlay - creates a crosshatch pattern */
 body::before {
@@ -70,7 +80,7 @@ body::before {
   opacity: 0.3;                                      /* Semi-transparent overlay */
 }
 
-.container, .testing, .site-footer {
+.container, .site-footer {
   position: relative;
   z-index: 1;            /* ensure these sit above the overlay */
 }
@@ -199,11 +209,6 @@ body::before {
 }
 
 /* ========= Responsive Edges ========= */
-/* Tablet and below - fixes background on scroll */
-@media (max-width: 1024px) { 
-  body { background-attachment: scroll; }           /* Background scrolls with content (better performance) */
-}
-
 /* Small phones - adjust countdown layout */
 @media (max-width: 480px) { 
   .time-unit { flex-basis: 48%; }                   /* 2 units per row */
@@ -426,18 +431,6 @@ body::before {
   }
 }
 
-.testing{
-  display: flex;
-  justify-content: center;    /* center the QR horizontally */
-  width: 100%;
-  margin-bottom: var(--space);
-}
-
-.testing img{
-  max-width: 220px;           /* or whatever size you like */
-  height: auto;
-}
-
 
 /*<!-------------------------------Footer area with contact details------------------------------------------------> */
 /* Make footer span the full width even though body uses flex/center */
@@ -469,12 +462,6 @@ body::before {
   font-family: "Times New Roman", serif;
 }
 
-.footer-contact a {
-  color: #00adb5;
-  font-weight: 700;
-  text-decoration: none;
-}
-.footer-contact a:hover { text-decoration: underline; }
 
 /* Social icons row */
 .footer-social { display: flex; gap: 10px; }
@@ -572,6 +559,8 @@ body::before {
 .lucky-draw {
   margin-top: var(--space);
   text-align: center;
+  width: min(92vw, var(--form-max-width));
+  margin: var(--space) auto 0; 
 }
 .lucky-title {
   font-size: clamp(18px, 2.4vw, 30px);
@@ -598,17 +587,17 @@ body::before {
 }
 
 /* Responsive iframe height for laptop + mobile */
-.lucky-frame {
+.lucky-frame{
   display: block;
   width: 100%;
-  height: clamp(700px, 110vh, 1500px);
-  /* Google adds its own background—keep ours subtle */
+  height: var(--form-embed-h);
   background: rgba(0,0,0,.05);
+  border: 0;
 }
 
 /* Make it taller on small screens so there’s less inner scrolling */
-@media (max-width: 640px) {
-  .lucky-frame { height: clamp(680px, 140vh, 1800px); }
+@media (max-width: 640px){
+  .lucky-frame{ height: min(var(--form-embed-h-sm), 95vh); }
 }
 
 /* Fallback link styling */
@@ -625,7 +614,7 @@ body::before {
 .event-details { margin-bottom: var(--space); }
 
 /* ===== Day Schedule ===== */
-.day-schedule { margin-top: var(--space); text-align: left; }
+.day-schedule { margin-top: var(--space) auto; text-align: left; }
 .sched-title {
   font-size: clamp(18px, 2.4vw, 30px);
   color: #ffd700; text-align: center;
@@ -645,44 +634,6 @@ body::before {
   box-shadow: 0 12px 34px rgba(0,0,0,.35);
 }
 
-/* Notion-style “now” line */
-.now-line {
-  position: absolute; left: 0; right: 0; height: 0;
-  border-top: 2px solid #f25b5b; z-index: 2; display: none;
-}
-.now-line .dot {
-  position: absolute; left: 12px; top: -5px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #f25b5b; box-shadow: 0 0 0 4px rgba(242,91,91,.25);
-}
-
-/* List becomes a time-scaled stack; JS sets heights & top */
-.sched-list { position: relative; padding: 16px 16px 18px 16px; }
-.sched-item {
-  position: absolute; left: 0; right: 0;
-  display: grid; grid-template-columns: 110px 1fr; gap: 10px;
-  padding: 10px 12px; border-left: 3px solid rgba(212,175,55,.35);
-}
-.sched-item time {
-  color: #ffd700; font-weight: 700;
-  text-shadow: 1px 1px 2px rgba(0,0,0,.4);
-}
-.sched-item .what { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
-.sched-item .meta { display: block; opacity: .85; font-style: italic; }
-
-.sched-item.is-current {
-  background: linear-gradient(90deg, rgba(255,215,0,.12), transparent 55%);
-  border-left-color: #ffd700;
-}
-.sched-item.is-current::after {
-  content: "• LIVE"; color: #ffd700; font-weight: 700; margin-left: 8px;
-}
-
-@media (max-width: 520px){
-  .sched-item { grid-template-columns: 92px 1fr; padding: 8px 10px; }
-  .sched-item time { font-size: 12px; }
-  .sched-item .what { font-size: 14px; }
-}
 
 /* Schedule container padding */
 .sched-list { position: relative; padding: 18px 16px 22px 16px; }
@@ -707,13 +658,6 @@ body::before {
 .sched-item .what { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
 .sched-item .meta { display: block; opacity: .85; font-style: italic; }
 
-/* LIVE highlight */
-.sched-item.is-current {
-  background: linear-gradient(90deg, rgba(255,215,0,.16), rgba(0,0,0,.18) 55%);
-  border-left-color: #ffd700;
-}
-.sched-item.is-current::after { content:"• LIVE"; color:#ffd700; font-weight:700; margin-left:8px; }
-
 /* Smaller screens: tighten grid and font sizes a touch */
 @media (max-width: 900px){
   .sched-item { grid-template-columns: 108px 1fr; gap: 10px; padding: 10px 12px; }
@@ -722,5 +666,351 @@ body::before {
   .sched-item { grid-template-columns: 92px 1fr; padding: 10px 12px; }
   .sched-item time { font-size: 12px; }
   .sched-item .what { font-size: 14px; }
+}
+
+
+/* schedule stays wide */
+.day-schedule { width: min(92vw, 980px); margin: var(--space) auto 0; }
+.day-schedule .sched-wrap { width: 100%; max-width: none; }
+
+/* lucky draw gets a narrower container */
+.lucky-draw     { width: min(92vw, var(--form-max-width)); margin: var(--space) auto 0; }
+.lucky-frame-wrap { width: 100%; margin-inline: auto; }  /* keep the iframe centered inside */
+
+@media (min-width:1600px){
+  .day-schedule { width: min(85vw, 1200px); }
+  /* keep lucky draw capped at your chosen --form-max-width on very large screens */
+  .lucky-draw   { width: min(92vw, var(--form-max-width)); }
+}
+
+/* ===== Lucky Draw Modal ===== */
+.jtm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;                   /* shown via JS */
+}
+
+.jtm-modal.is-open { display: block; }
+
+/* half-transparent layer over the site, still showing batik */
+.jtm-modal__backdrop{
+  position: absolute; inset: 0;
+  background: rgba(20, 8, 6, .55);
+  backdrop-filter: blur(3px);
+}
+
+/* the glass card */
+.jtm-modal__card{
+  position: relative;
+  margin: min(8vh, 64px) auto;
+  width: min(92vw, 720px);
+  background: rgba(255,255,255,.08);
+  border: 2px solid rgba(212,175,55,.35);
+  border-radius: 16px;
+  box-shadow: 0 22px 66px rgba(0,0,0,.45);
+  padding: clamp(18px, 3.2vw, 28px);
+  color: #fff;
+  z-index: 1;
+}
+
+/* title & text */
+.jtm-modal__title{
+  text-align: center;
+  color: #ffd700;
+  font-size: clamp(20px, 2.6vw, 32px);
+  text-shadow: 2px 2px 4px rgba(0,0,0,.6);
+  margin-bottom: 8px;
+}
+.jtm-modal__desc{
+  text-align: center;
+  opacity: .95;
+  font-size: clamp(14px, 1.6vw, 18px);
+  margin-bottom: clamp(12px, 2vw, 18px);
+}
+
+/* prize grid */
+.jtm-modal__prizes{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: clamp(10px, 1.6vw, 16px);
+  margin-bottom: clamp(14px, 2.2vw, 20px);
+}
+.jtm-prize{
+  text-align: center;
+}
+.jtm-prize img{
+  display: block;
+  width: 100%;
+  height: clamp(140px, 22vw, 220px);
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+.jtm-prize figcaption{
+  margin-top: 6px;
+  font-size: clamp(12px, 1.4vw, 14px);
+  color: #ffd700;
+  opacity: .95;
+}
+
+/* actions */
+.jtm-modal__actions{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* buttons styled to match site */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(212,175,55,.35);
+  transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.btn:focus-visible{ outline: 2px solid #ffd700; outline-offset: 2px; }
+
+.btn-primary{
+  color: #1b130a;
+  background: linear-gradient(180deg, #ffd700, #e0b100);
+  box-shadow: 0 6px 18px rgba(255,215,0,.25);
+}
+.btn-primary:hover{ transform: translateY(-1px); }
+
+.btn-secondary{
+  color: #ffd700;
+  background: rgba(255,255,255,.06);
+}
+.btn-secondary:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.10);
+  color: #ffdf6a;
+}
+
+/* close button (optional X) */
+.jtm-modal__close{
+  position: absolute;
+  top: 8px; right: 10px;
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(255,255,255,.05);
+  color: #ffd700;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.jtm-modal__close:hover{ background: rgba(255,255,255,.10); }
+
+@media (max-width: 540px){
+  .jtm-modal__card{ width: min(94vw, 520px); }
+}
+
+/* prevent background scroll while open */
+body.modal-open{ overflow: hidden; }
+
+/* leave room on the right for the pill */
+.sched-item { padding-right: clamp(64px, 12vw, 120px); }
+
+/* active row — soft gold wash + stronger left border */
+.sched-item.is-current{
+  background: linear-gradient(90deg, rgba(255,215,0,.14), rgba(0,0,0,.18) 60%);
+  border-left-color: #ffd700;
+  box-shadow:
+    0 0 0 1px rgba(212,175,55,.25) inset,
+    0 6px 18px rgba(0,0,0,.25);
+}
+
+/* “Happening Now” pill on the right with a gold dot inside */
+/* Right-side LIVE pill (gold dot + gold text) */
+.sched-item.is-current::after{
+  content: "  ●  LIVE";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  padding: 6px 12px 6px 14px;      /* space for the dot */
+  font: 700 14px/1 "Georgia", serif;
+  letter-spacing: .5px;
+  color: #FFD700;                  /* gold text */
+  background: rgba(255,255,255,.06);               /* subtle glass */
+  border: 1px solid rgba(212,175,55,.45);          /* gold outline */
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25),
+              inset 0 0 0 1px rgba(212,175,55,.15);
+}
+
+/* Tweak size/position on small screens */
+@media (max-width: 520px){
+  .sched-item.is-current::after{
+    right: 10px;
+    font-size: 12px;
+    padding: 5px 10px 5px 12px;
+  }
+}
+
+
+/* tighter on very small screens */
+@media (max-width:520px){
+  .sched-item { padding-right: 88px; }
+  .sched-item.is-current::after{ right: 10px; padding: 3px 10px 3px 24px; }
+}
+
+/* smooth scroll for anchor jumps */
+html { scroll-behavior: smooth; }
+
+/* ensure anchors don't tuck under the nav on snap */
+#countdown, #schedule, #lucky-draw { scroll-margin-top: 16px; }
+
+/* ---------- Side toggle (subtle “peek” on the left) ---------- */
+/* ===== Left Quick Nav (sleek, animated) ===== */
+:root{
+  --nav-width: clamp(160px, 24vw, 240px);
+  --nav-peek: 14px;                 /* visible sliver when collapsed */
+  --nav-gold: #ffd700;
+  --nav-border: rgba(212,175,55,.32);
+}
+
+.side-nav{
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 999;
+  width: var(--nav-width);
+  transform: translateX(calc(-100% + var(--nav-peek))) translateY(-50%);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--nav-border);
+  border-left: none;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  opacity: .62;
+  transition:
+    transform .36s cubic-bezier(.2,.6,.2,1),
+    opacity   .36s ease;
+}
+
+/* smooth reveal on hover/focus */
+.side-nav:hover,
+.side-nav:focus-within{
+  transform: translateX(0) translateY(-50%);
+  opacity: 1;
+}
+
+/* inner layout */
+.side-nav__list{
+  list-style: none;
+  margin: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.side-nav a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--nav-gold);
+  font: 700 14px/1.2 "Georgia", serif;
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease,
+    opacity .2s ease;
+}
+.side-nav a .ico{ width: 18px; text-align: center; opacity: .9; }
+
+.side-nav a:hover,
+.side-nav a:focus-visible{
+  background: rgba(255,255,255,.08);
+  border-color: rgba(212,175,55,.38);
+  transform: translateX(2px);
+  outline: none;
+}
+
+/* active link while that section is in view */
+.side-nav a.is-active{
+  background: rgba(255,215,0,.10);
+  border-color: rgba(212,175,55,.42);
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,.18);
+}
+
+/* gentle stagger when opening */
+@keyframes jtmFadeSlide {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.side-nav:hover .side-nav__item,
+.side-nav:focus-within .side-nav__item{ animation: jtmFadeSlide .32s ease both; }
+.side-nav:hover .side-nav__item:nth-child(1),
+.side-nav:focus-within .side-nav__item:nth-child(1){ animation-delay: .02s; }
+.side-nav:hover .side-nav__item:nth-child(2),
+.side-nav:focus-within .side-nav__item:nth-child(2){ animation-delay: .06s; }
+.side-nav:hover .side-nav__item:nth-child(3),
+.side-nav:focus-within .side-nav__item:nth-child(3){ animation-delay: .10s; }
+
+/* little “handle” that hints there's a hidden nav */
+.side-nav__handle{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-55%, -50%);
+  width: 26px; height: 60px;
+  border-radius: 0 10px 10px 0;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--nav-border);
+  border-left: none;
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  pointer-events: none;               /* purely decorative */
+  display: grid; place-items: center;
+}
+.side-nav__handle::before{
+  content: "❯";                       /* arrow pointing right */
+  transform: translateX(-1px);
+  font: 700 14px/1 "Georgia", serif;
+  color: var(--nav-gold);
+  opacity: .8;
+}
+
+/* subtle nudge to draw attention just occasionally */
+@keyframes jtmNudge {
+  0%,80%,100% { transform: translate(-55%, -50%); }
+  86%         { transform: translate(-49%, -50%); }
+  92%         { transform: translate(-55%, -50%); }
+}
+.side-nav__handle{ animation: jtmNudge 4s ease-in-out 6s infinite; }
+.side-nav:hover .side-nav__handle,
+.side-nav:focus-within .side-nav__handle{ animation: none; opacity: .5; }
+
+/* targets get a small scroll margin so smooth scroll stops nicely */
+#countdown, #schedule, #lucky-draw { scroll-margin-top: 16px; }
+
+/* mobile tweaks — keep it left, just slimmer & a bit lower */
+@media (max-width: 560px){
+  :root{ --nav-width: min(74vw, 240px); --nav-peek: 10px; }
+  .side-nav{ left: 4px; }
+  .side-nav__handle{ height: 48px; width: 22px; }
+  .side-nav a{ font-size: 13px; padding: 8px 9px; }
+}
+
+/* motion respect */
+@media (prefers-reduced-motion: reduce){
+  .side-nav,
+  .side-nav__handle,
+  .side-nav__item{ transition: none !important; animation: none !important; }
 }
 
