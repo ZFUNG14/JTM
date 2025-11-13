@@ -132,7 +132,7 @@ body::before {
   text-align: center;                                /* Center all text inside */
   z-index: 10;                                       /* Place above background overlay */
   width: min(92vw, 980px);                          /* Responsive width: 92% of viewport or max 980px */
-  padding: clamp(20px, 4vw, 48px);                  /* Responsive padding */
+  padding: clamp(12px, 4vw, 30px);                  /* Responsive padding - RESTORED */
   margin: var(--space) auto;                        /* Vertical spacing, horizontally centered */
   background: rgba(255, 255, 255, 0.08);            /* Semi-transparent white background */
   backdrop-filter: blur(10px);                      /* Blur effect for glassmorphism */
@@ -545,11 +545,12 @@ body::before {
   border-radius: 14px; overflow: hidden;
   box-shadow: 0 12px 34px rgba(0,0,0,.35);
   margin-bottom: calc(var(--space) * 2);
+  display:flex; flex-direction:column;
 }
 
 
 /* Schedule container padding */
-.sched-list { position: relative; padding: 18px 16px 22px 16px; }
+.sched-list { position: relative; padding: 18px 16px 22px 16px; min-height:120px;}
 
 /* Each item becomes a little card so text never feels cramped */
 .sched-item {
@@ -863,6 +864,18 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 
-
-
 .hero{ display:block; }
+
+
+.sched-note{
+  margin-top: clamp(6px, 1.2vw, 12px);
+  font-size: clamp(12px, 1.6vw, 14px);
+  font-style: italic;
+  text-align: center;
+  color: rgba(255,255,255,0.65);                   /* for dark/red card */
+}
+
+/* If that card ever sits on a light background, this keeps it readable */
+@media (prefers-color-scheme: light) {
+  .sched-note{ color: rgba(0,0,0,0.55); border-top-color: rgba(0,0,0,0.15); }
+}

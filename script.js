@@ -177,7 +177,11 @@ function initSchedule() {
       rowData.push({ el, s, e });
     });
 
-    wrap.style.height = `${wrapH}px`;
+    // Give the UL space for all absolutely-positioned rows
+    list.style.minHeight = Math.ceil(lastBottom + 20) + 'px';
+
+    // Let the wrapper size to its content instead of forcing a height
+    wrap.style.height = 'auto';
 
     // --- highlight the row that's happening now (no line) ---
     function perthNow(){
