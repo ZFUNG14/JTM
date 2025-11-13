@@ -40,6 +40,10 @@
   --form-max-width: 720px;
   --form-embed-h:   680px;
   --form-embed-h-sm:760px;
+
+  --logo-card-pad: clamp(8px, 1vw, 12px);
+  --org-card-h:    clamp(130px, 18vw, 170px);
+  --supp-card-h:   clamp(120px, 16vw, 160px);
 }
 
 /* ===== Mobile tweaks (<700px) ===== */
@@ -310,22 +314,6 @@ body::before {
   overflow: visible;                                /* Show all content */
 }
 
-/* Generic logo styling (applies to all logos) */
-.logos-list img{
-  display: block;                                   /* Block element */
-  width: auto;                                      /* Auto width maintains aspect ratio */
-  object-fit: contain;                              /* Fit image within bounds */
-  background: rgba(255,255,255,0.06);              /* Subtle white background */
-  border: 1px solid rgba(212,175,55,0.18);         /* Faint gold border */
-  border-radius: 8px;                               /* Rounded corners */
-  padding: clamp(4px, 0.8vw, 8px);                 /* Responsive padding */
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);           /* Subtle shadow */
-}
-
-/* Organisers: larger single logo (Consulate General) */
-.partners-group.organisers .logos-list img{
-  height: var(--org-logo-h);                        /* Larger height for organiser logo */
-}
 
 /* === Supporters: tight grid layout for multiple logos === */
 .supporters .logos-list{
@@ -353,59 +341,6 @@ body::before {
 .supporters .logos-list img:nth-child(7){
   width: var(--supp-square);                        /* Fixed square width */
   flex: 0 0 var(--supp-square);                    /* Don't grow or shrink */
-}
-
-/* Desktop: side-by-side layout for organisers and supporters */
-@media (min-width: 900px){
-  .partners{ 
-    grid-template-columns: 1fr 2fr;                 /* Organisers narrower, supporters wider */
-    align-items: start;                             /* Align to top */
-  }
-}
-
-/* Mobile/tablet: stack logos in 2-column grid */
-@media (max-width: 700px){
-  .supporters .logos-list{
-    display: grid;                                  /* Switch to grid layout */
-    grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 2 equal columns */
-    grid-auto-flow: row dense;                      /* Fill gaps automatically */
-    gap: 12px;                                      /* Fixed gap */
-    justify-items: center;                          /* Center items in grid cells */
-    width: 100%;                                    /* Full width */
-  }
-
-  /* Reset all desktop positioning for mobile */
-  .supporters .logos-list img{
-    width: 100% !important;                         /* Full width of grid cell */
-    max-width: 100%;                                /* No max width limit */
-    height: clamp(52px, 15vw, 70px);               /* Responsive height */
-    object-fit: contain;                            /* Maintain aspect ratio */
-    grid-column: auto !important;                   /* Auto column placement */
-    grid-row: auto !important;                      /* Auto row placement */
-    aspect-ratio: auto !important;                  /* No forced aspect ratio */
-    flex: initial !important;                       /* Reset flex properties */
-  }
-
-  .jtm-logo {
-    display: block;
-    margin: 0 auto;              /* center */
-    width: min(80vw, 320px);     /* smaller on mobile */
-    height: auto;                /* stop height from forcing overflow */
-    max-width: 100%;             /* never exceed container */
-  }
-
-  /* Center align labels and organiser section on mobile */
-  .partners-group { justify-items: center; }        /* Center grid items */
-
-  /* Organiser section centering */
-  .partners-group.organisers .logos-list{
-    justify-content: center;                        /* Center in flex container */
-    width: 100%;                                    /* Full width */
-  }
-  .partners-group.organisers .logos-list img{
-    margin-inline: auto;                            /* Center image */
-    height: clamp(90px, 28vw, 140px);              /* Smaller logo on mobile */
-  }
 }
 
 /* Super-small phones: single column for supporter logos */
@@ -847,152 +782,87 @@ html { scroll-behavior: smooth; }
 /* ensure anchors don't tuck under the nav on snap */
 #countdown, #schedule, #lucky-draw { scroll-margin-top: 16px; }
 
-/* ---------- Side toggle (subtle “peek” on the left) ---------- */
-/* ===== Left Quick Nav (sleek, animated) ===== */
-/* ================= JTM Left Rail (side toggle) ================ */
-.jtm-rail{
-  position: fixed;
-  left: 0;
-  top: 40%;
-  transform: translateY(-40%);
-  z-index: 999;           /* above content, below modal */
-  pointer-events: auto;
+/* --- Organised by: ALWAYS 2 logos in one line --- */
+.partners-group.organisers .logos-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: clamp(12px, 1.4vw, 18px);
+  justify-items: center;
+  align-items: center;
+}
+.partners-group.organisers .logos-list img{
+  height: clamp(110px, 16vw, 160px);
+  width: auto;
+}
+.partners-group.organisers .logos-list img.is-square{
+  width: clamp(110px, 16vw, 160px);
+  height: auto;
 }
 
-/* the menu panel */
-.jtm-rail__list{
-  list-style: none;
-  margin: 0;
-  padding: 10px;
-  width: 220px;
-
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(212,175,55,.28);
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.35);
-
-  /* collapsed state: hide off-screen, leave a tiny sliver */
-  transform: translateX(calc(-100% + 18px));
-  opacity: .65;
-
-  transition:
-    transform .32s cubic-bezier(.2,.6,.2,1),
-    opacity   .22s ease,
-    box-shadow .28s ease;
+/* --- Supported by: ALWAYS 3 rows × 2 columns --- */
+.partners-group.supporters .logos-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  grid-auto-rows: 1fr;          /* equal cell heights */
+  gap: clamp(12px, 1.6vw, 20px);
+  justify-items: center;
+  align-items: center;
+}
+.partners-group.supporters .logos-list img{
+  height: clamp(72px, 12vw, 120px);  /* consistent logo height */
+  width: auto;
+  max-width: min(90%, 420px);
+}
+.partners-group.supporters .logos-list img.is-square{
+  width: clamp(72px, 12vw, 120px);   /* square logos stay square */
+  height: auto;
 }
 
-/* open on hover/focus or programmatic "is-open" */
-.jtm-rail:hover .jtm-rail__list,
-.jtm-rail:focus-within .jtm-rail__list,
-.jtm-rail.is-open .jtm-rail__list{
-  transform: translateX(0);
-  opacity: 1;
+/* 2 cards wide, same height, centered */
+.partners-group.organisers .logos-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-auto-rows: var(--org-card-h);
+  gap: clamp(12px, 2vw, 18px);
+  justify-items: center;
+  align-items: center;
 }
 
-/* nav links */
-.jtm-rail__list a{
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px;
-  text-decoration: none;
-  color: #f7f0d9;                     /* soft ivory */
-  font-family: "Georgia", serif;
+/* each logo fills its card but keeps aspect ratio */
+.partners-group.organisers .logos-list img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--logo-card-pad);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
   border-radius: 10px;
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-.jtm-rail__list a i{ color: #ffd700; min-width: 18px; text-align: center; }
-.jtm-rail__list a:hover{
-  color: #ffd700;
-  background: rgba(255,255,255,.06);
-  transform: translateX(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 
-/* little side tab (arrow indicator) that always peeks out */
-.jtm-rail__tab{
-  position: absolute;
-  left: 0; top: 50%;
-  transform: translate(-50%, -50%);   /* half outside viewport */
-  width: 16px; height: 72px;
-  border-radius: 0 10px 10px 0;
-  border: 1px solid rgba(212,175,55,.28);
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 2px 8px rgba(0,0,0,.35);
-  display: grid; place-items: center;
-  cursor: pointer;
-  transition: background .2s ease, border-color .2s ease, transform .32s cubic-bezier(.2,.6,.2,1);
+/* fixed 2 columns on all screens; rows auto = equal card height */
+.partners-group.supporters .logos-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  grid-auto-rows: var(--supp-card-h);
+  gap: clamp(12px, 1.6vw, 18px);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
 }
 
-/* gold chevron ▸ */
-.jtm-rail__chev{
-  width: 7px; height: 7px;
-  border-right: 2px solid #ffd700;
-  border-top:  2px solid #ffd700;
-  transform: rotate(45deg);    /* points right */
-  transition: transform .32s cubic-bezier(.2,.6,.2,1), opacity .2s ease;
-  opacity: .9;
-}
-
-/* gentle "nudge" to hint discoverability when collapsed */
-@keyframes jtmChevronNudge{
-  0%,70%,100% { transform: translateX(0)   rotate(45deg); }
-  80%         { transform: translateX(2px) rotate(45deg); }
-  90%         { transform: translateX(0)   rotate(45deg); }
-}
-.jtm-rail:not(:hover):not(.is-open) .jtm-rail__chev{
-  animation: jtmChevronNudge 4.8s ease-in-out infinite;
-}
-
-/* rotate chevron when the panel opens */
-.jtm-rail:hover .jtm-rail__chev,
-.jtm-rail:focus-within .jtm-rail__chev,
-.jtm-rail.is-open .jtm-rail__chev{
-  transform: rotate(-135deg); /* points left */
-}
-
-/* Responsive polish */
-@media (max-width: 800px){
-  .jtm-rail{ top: 38%; }
-  .jtm-rail__list{ width: 200px; }
-  .jtm-rail__tab{ height: 64px; }
-}
-@media (max-width: 520px){
-  .jtm-rail{ top: auto; bottom: 20px; transform: none; }
-  .jtm-rail__list{
-    width: min(86vw, 280px);
-    transform: translateX(calc(-100% + 18px)); /* still peeks nicely */
-  }
-  .jtm-rail__tab{ height: 56px; }
-  .jtm-rail__list a{ padding: 9px 10px; }
-}
-
-/* make room at the top for the close button */
-.jtm-rail__list { 
-  position: relative; 
-  padding: 34px 10px 10px; /* extra space on the left for the button */
-}
-/* absolute corner placement */
-.jtm-rail__close-li {
-  position: absolute;
-  top: 6px;
-  left: 6px;     /* was right: 6px */
-  right: auto;   /* reset */
-  list-style: none;
-}.jtm-rail__close {
-  display: none;                /* default: hidden on hover/desktop */
-  width: 28px; height: 28px;
-  border-radius: 999px;
-  border: 1px solid rgba(212,175,55,.28);
-  background: rgba(255,255,255,.06);
-  color: #ffd700;
-  font-weight: 700; line-height: 1;
-  display: inline-flex; align-items: center; justify-content: center;
-}
-
-/* show on touch devices (no hover, coarse pointer) */
-@media (hover: none) and (pointer: coarse) {
-  .jtm-rail__close { display: inline-flex; }
+/* every cell looks identical; image scales inside */
+.partners-group.supporters .logos-list img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--logo-card-pad);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 
 
 
-
+.hero{ display:block; }
