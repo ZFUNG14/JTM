@@ -28,7 +28,7 @@
   --section-title: clamp(32px, 3vw, 56px);    /* between mobile 50 and desktop 72 */
 
   /* Images / layout tokens */
-  --jtm-logo-h:   clamp(350px, 24vw, 800px);
+  --jtm-logo-w: clamp(220px, 70vw, 520px);
   --org-logo-h:   clamp(160px, 4.5vw, 800px);
 
   /* Supporters */
@@ -255,11 +255,12 @@ body::before {
 
 /* --- Journey to Malaysia logo image --- */
 .jtm-logo{
-  height: var(--jtm-logo-h);                        /* Responsive height */
-  width: auto;                                      /* Maintain aspect ratio */
-  display: block;                                   /* Block element */
-  margin-inline: auto;                              /* Center horizontally */
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,.35)); /* Drop shadow on image */
+  width: var(--jtm-logo-w);   /* responsive, capped by card width */
+  max-width: 100%;
+  height: auto;               /* keep aspect ratio */
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
 }
 
 /* --- Divider line --- */
